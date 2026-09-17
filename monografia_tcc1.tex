@@ -1,0 +1,304 @@
+% ============================================================================
+% Monografia de TCC I — Sistema IoT para Monitoramento da Presença de
+% Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo
+%
+% Aluna: Fernanda Andrade Bicalho da Cruz
+% Orientador: Janier Arias García — Coorientador: Frederico Gualberto Ferreira Coelho
+% Universidade Federal de Minas Gerais — Escola de Engenharia
+%
+% Este arquivo é mantido pela skill "monografia-tex" (.claude/skills/monografia-tex).
+% Ele é a fonte única do texto da monografia — não crie cópias paralelas.
+% Para compilar: envie este arquivo, "referencias.bib" e a pasta "assets_tex/"
+% (com as imagens da capa) juntos para um projeto no Overleaf.
+% ============================================================================
+
+\documentclass[
+    12pt,
+    openright,
+    twoside,
+    a4paper,
+    chapter=TITLE,
+    section=TITLE,
+    english,
+    brazil
+    ]{abntex2}
+
+% ----------------------------------------------------------------------------
+% Pacotes
+% ----------------------------------------------------------------------------
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{float}
+
+\usepackage[brazilian,hyperpageref]{backref}
+\usepackage[alf]{abntex2cite}
+
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+\renewcommand{\backref}{}
+\renewcommand*{\backrefalt}[4]{%
+	\ifcase #1
+		Nenhuma citação no texto.
+	\or
+		Citado na página #2.
+	\else
+		Citado #1 vezes nas páginas #2.
+	\fi}%
+
+% ----------------------------------------------------------------------------
+% Dados para capa e folha de rosto
+% (a capa e a folha de rosto abaixo são montadas manualmente, não via
+% \imprimircapa, para controlar a posição da logo da UFMG — mas estes campos
+% continuam usados pelo abntex2 em metadados do PDF e no hypersetup)
+% ----------------------------------------------------------------------------
+\titulo{Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo}
+\autor{Fernanda Andrade Bicalho da Cruz}
+\local{Belo Horizonte}
+\data{2026}
+\orientador{Janier Arias García}
+\instituicao{Universidade Federal de Minas Gerais -- Escola de Engenharia -- Curso de Engenharia de Sistemas}
+\tipotrabalho{Trabalho de Conclusão de Curso I}
+\preambulo{Trabalho de Conclusão de Curso I apresentado ao Curso de Engenharia de Sistemas da Escola de Engenharia da Universidade Federal de Minas Gerais como requisito parcial para obtenção do título de Bacharel em Engenharia de Sistemas.}
+
+\makeatletter
+\hypersetup{
+    pdftitle={\@title},
+    pdfauthor={\@author},
+    pdfsubject={\imprimirpreambulo},
+    pdfcreator={LaTeX com abnTeX2},
+    pdfkeywords={IoT}{reconhecimento facial}{transporte escolar}{TCC},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    bookmarksdepth=4
+}
+\makeatother
+
+\makeindex
+
+% ============================================================================
+\begin{document}
+
+\selectlanguage{brazil}
+\frenchspacing
+
+% ----------------------------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------------------------
+\pretextual
+
+% --- Capa (manual, com logo da UFMG) ---
+\begin{titlepage}
+\begin{center}
+    \includegraphics[width=4cm]{assets_tex/ufmg_logo.png}
+    \vspace{0.5cm}
+
+    {\large UNIVERSIDADE FEDERAL DE MINAS GERAIS}\\
+    {\large ESCOLA DE ENGENHARIA}\\
+    {\large CURSO DE ENGENHARIA DE SISTEMAS}
+
+    \vspace{3cm}
+    {\large\textbf{\imprimirautor}}
+    \vspace{3cm}
+
+    {\LARGE\textbf{\imprimirtitulo}}
+
+    \vfill
+    {\large \imprimirlocal}\\
+    {\large \imprimirdata}
+\end{center}
+\end{titlepage}
+
+% --- Folha de rosto ---
+\begin{titlepage}
+\begin{center}
+    {\large\textbf{\imprimirautor}}
+\end{center}
+
+\vspace{3cm}
+\begin{center}
+    {\LARGE\textbf{\imprimirtitulo}}
+\end{center}
+\vspace{2cm}
+
+\begin{flushright}
+    \begin{minipage}{8cm}
+        \imprimirpreambulo
+
+        \vspace{0.5cm}
+        Orientador: \imprimirorientador \\
+        Coorientador: Frederico Gualberto Ferreira Coelho
+    \end{minipage}
+\end{flushright}
+
+\vfill
+\begin{center}
+    {\large \imprimirlocal}\\
+    {\large \imprimirdata}
+\end{center}
+\end{titlepage}
+
+% --- Resumo ---
+\begin{resumo}
+    % TODO(monografia-tex): substituir por um resumo de 1 parágrafo assim que
+    % Introdução, Metodologia e Revisão Bibliográfica estiverem redigidas —
+    % o resumo é escrito por último, resumindo o que já foi escrito, nunca o
+    % contrário.
+
+    \vspace{\onelineskip}
+    \noindent
+    \textbf{Palavras-chave}: IoT. reconhecimento facial. reconhecimento de voz. transporte escolar. TRANSCOLAR RURAL.
+\end{resumo}
+
+\begin{resumo}[Abstract]
+    \begin{otherlanguage*}{english}
+        % TODO(monografia-tex): tradução do resumo em inglês.
+
+        \vspace{\onelineskip}
+        \noindent
+        \textbf{Keywords}: IoT. facial recognition. voice recognition. school transportation.
+    \end{otherlanguage*}
+\end{resumo}
+
+% --- Sumário ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ----------------------------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------------------------
+\textual
+
+\chapter{Introdução}
+
+O transporte escolar rural é essencial para garantir o acesso à educação em
+regiões afastadas, mas apresenta desafios relacionados à segurança dos
+estudantes, ao controle de presença e à eficiência operacional da gestão
+pública. Na ausência de mecanismos automatizados, o registro de embarque e
+desembarque depende de processos manuais, sujeitos a falhas e de difícil
+auditoria, o que compromete tanto a segurança física dos alunos quanto a
+transparência da gestão do serviço.
+
+Este trabalho propõe a concepção e a implementação de um dispositivo de
+Internet das Coisas (IoT) embarcado em veículos escolares rurais, capaz de
+identificar e registrar a presença dos estudantes por meio de reconhecimento
+de voz e de vídeo. Os eventos de presença capturados pelo dispositivo são
+integrados de forma automatizada ao sistema TRANSCOLAR RURAL, permitindo à
+gestão pública acompanhar a operação do transporte escolar com maior
+precisão e agilidade.
+
+O objetivo geral deste trabalho é projetar e implementar um dispositivo IoT
+embarcado em ônibus escolares que registre a presença dos alunos por
+reconhecimento de voz e vídeo, integrando os dados gerados ao sistema
+TRANSCOLAR RURAL. A partir desse objetivo geral, definem-se os seguintes
+objetivos específicos: (i) desenvolver um protótipo de hardware IoT dotado de
+câmera e microfone; (ii) implementar algoritmos de reconhecimento facial e de
+voz adequados às condições reais de operação; (iii) integrar o dispositivo ao
+sistema TRANSCOLAR RURAL por meio de rede móvel; (iv) viabilizar a geração de
+relatórios inteligentes voltados a gestores escolares; e (v) avaliar o
+desempenho, a segurança e a confiabilidade do sistema proposto.
+
+O desenvolvimento deste trabalho está organizado em dois ciclos. O TCC~I, ao
+qual se refere esta monografia, compreende o levantamento de requisitos, a
+fundamentação teórica sobre IoT e Inteligência Artificial aplicadas ao
+problema, a definição da arquitetura de hardware e software do sistema e a
+avaliação dos impactos socioeconômicos, legais e ambientais da tecnologia
+proposta. O TCC~II, por sua vez, dará continuidade ao trabalho com o
+desenvolvimento prático do software embarcado, a integração de comunicação
+via rede móvel, a simulação em ambiente controlado, a realização de testes
+piloto em ônibus escolares rurais e a validação sistêmica de métricas de
+acurácia e tempo de resposta.
+
+Esta monografia está organizada da seguinte forma: o Capítulo~2 apresenta a
+revisão bibliográfica sobre reconhecimento biométrico e comunicação para IoT;
+o Capítulo~3 descreve a metodologia adotada para alcançar os objetivos do
+TCC~I; o Capítulo~4 discute os impactos socioeconômicos, legais e de
+humanidades da tecnologia proposta; e o Capítulo~5 apresenta o cronograma
+planejado para o TCC~II.
+
+\chapter{Revisão Bibliográfica}
+% TODO(monografia-tex): faltam ainda: (i) a comparação empírica completa dos
+% dez algoritmos de reconhecimento facial baseados em aprendizado profundo
+% avaliados no projeto (ArcFace, VGG-Face, Dlib, GhostFaceNet, SFace,
+% FaceNet, FaceNet512, DeepFace, DeepID e OpenFace), com tabela de
+% acurácia/tempo/tamanho e a justificativa dos dois modelos escolhidos;
+% (ii) reconhecimento de voz em ambientes ruidosos; (iii) protocolos de
+% comunicação leve para IoT (MQTT).
+
+\section{Reconhecimento Facial}
+
+Anteriormente ao surgimento das técnicas baseadas em aprendizado profundo, o
+reconhecimento facial era abordado por meio de métodos estatísticos e de
+descritores de textura extraídos diretamente da imagem. O método Eigenfaces,
+proposto por \citeonline{turk1991eigenfaces}, representa cada rosto como uma
+combinação linear de componentes principais (PCA) extraídas de um conjunto de
+treinamento, reduzindo a dimensionalidade da imagem a um vetor de
+características compacto. O método Fisherfaces, introduzido por
+\citeonline{belhumeur1997eigenfaces}, aprimora essa abordagem ao empregar
+análise discriminante linear (LDA) em vez de PCA, buscando maximizar a
+separação entre classes (indivíduos) em vez de apenas a variância total dos
+dados. Já o método LBPH (\textit{Local Binary Patterns Histograms}), descrito
+por \citeonline{ahonen2004face}, dispensa a redução estatística de
+dimensionalidade e descreve o rosto por meio de histogramas de padrões
+binários locais, um descritor de textura originalmente empregado em outros
+problemas de visão computacional.
+
+Os três métodos têm em comum um custo computacional reduzido, dispensando
+aceleração por GPU ou NPU, o que os tornaria, em princípio, compatíveis até
+mesmo com hardware mais restrito do que o Raspberry Pi considerado neste
+projeto. Por esse motivo, foram considerados na revisão bibliográfica como
+candidatos preliminares. Optou-se, entretanto, por não incluí-los na
+comparação empírica realizada com os dez algoritmos baseados em aprendizado
+profundo, por dois motivos. Primeiro, por não empregarem aprendizado
+profundo, esses métodos não estão disponíveis na biblioteca \textit{DeepFace},
+adotada para padronizar o mesmo pipeline de detecção, alinhamento e
+comparação entre os demais algoritmos avaliados; incluí-los exigiria uma
+implementação à parte (via o módulo \texttt{cv2.face} do pacote
+\textit{opencv-contrib-python}), o que comprometeria a comparação justa entre
+os métodos ao introduzir um pipeline de pré-processamento distinto. Segundo,
+a literatura já demonstra de forma consistente que tais métodos são
+altamente sensíveis a variações de iluminação, ângulo e expressão facial --
+exatamente as condições adversas esperadas no interior de um ônibus escolar
+rural em movimento --, de modo que sua acurácia em condições não controladas
+tende a ficar muito abaixo da observada nos métodos baseados em aprendizado
+profundo avaliados neste trabalho.
+
+Dessa forma, Eigenfaces, Fisherfaces e LBPH são aqui mencionados como marco
+histórico da evolução do reconhecimento facial, que partiu de descritores
+estatísticos lineares (Eigenfaces, 1991; Fisherfaces, 1997) e de descritores
+de textura (LBPH, 2004) até chegar às arquiteturas de redes neurais
+profundas adotadas a partir de 2014, sem integrar, contudo, a comparação
+empírica conduzida neste trabalho.
+
+\chapter{Metodologia}
+% TODO(monografia-tex): ainda não escrita. Deve descrever como os objetivos de
+% TCC I serão alcançados (levantamento de requisitos, revisão bibliográfica,
+% projeto arquitetural e análise de trade-offs, avaliação de impactos).
+
+\chapter{Avaliação de Impactos Socioeconômicos, Legais e de Humanidades}
+% TODO(monografia-tex): ainda não escrita. Deve abordar segurança física dos
+% estudantes, transparência/otimização de recursos públicos, restrições legais
+% de privacidade e proteção de dados de menores (LGPD), e impacto ambiental do
+% descarte de hardware.
+
+\chapter{Cronograma do TCC II}
+% TODO(monografia-tex): ainda não escrita. Deve detalhar as atividades
+% previstas para o TCC II (desenvolvimento do software embarcado, integração
+% via MQTT/API, simulação, teste piloto, validação de métricas).
+
+% ----------------------------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------------------------
+\postextual
+
+\bibliography{referencias}
+
+\end{document}

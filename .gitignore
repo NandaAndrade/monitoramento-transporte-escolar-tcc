@@ -1,0 +1,20 @@
+# Ambientes virtuais Python
+.venv/
+.venv_deepface_legacy/
+__pycache__/
+*.pyc
+
+# Artefatos de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+# Sistema
+.DS_Store
+Thumbs.db
