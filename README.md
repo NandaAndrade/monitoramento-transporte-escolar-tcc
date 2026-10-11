@@ -1,53 +1,31 @@
-# Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural
+# Monitoramento de Presença em Transporte Escolar Rural
 
-Trabalho de Conclusão de Curso — Escola de Engenharia, UFMG.
-
-**Aluna:** Fernanda Andrade Bicalho da Cruz
-**Orientador:** Janier Arias García · **Coorientador:** Frederico Gualberto Ferreira Coelho
-
-## Sobre o projeto
-
-O transporte escolar rural não tem mecanismos automatizados de controle de presença, o que afeta a segurança dos estudantes e a gestão pública. O projeto propõe um dispositivo IoT embarcado em ônibus escolares que:
-
-- identifica e registra a presença dos alunos por **reconhecimento facial (vídeo)** e **reconhecimento de voz (áudio)**;
-- envia os dados ao sistema **TRANSCOLAR RURAL** via rede móvel (MQTT/API);
-- gera relatórios para gestores escolares e o poder público.
+Sistema IoT embarcado em ônibus escolares que registra a presença dos alunos por **reconhecimento facial (vídeo)** e **reconhecimento de voz (áudio)** e envia os dados para um sistema de gestão via rede móvel (MQTT/API).
 
 O hardware-alvo é um Raspberry Pi com o AI HAT (acelerador Hailo-10).
 
-| Ciclo | Escopo |
-|---|---|
-| **TCC I** (ago–nov/2026) | Requisitos, revisão bibliográfica, escolha de algoritmo e hardware, arquitetura, análise de impactos e texto da monografia. |
-| **TCC II** | Software embarcado, integração MQTT/API, simulação e teste piloto em ônibus real. |
-
-## Estrutura do repositório
-
-| Caminho | Conteúdo |
-|---|---|
-| `monografia_tcc1.tex`, `referencias.bib`, `assets_tex/` | Texto da monografia do TCC I em LaTeX (ABNT) |
-| `monografia/historico/` | Versões anteriores da monografia |
-| `Proposta - ... .pdf`, `Projeto de Trabalho de Conclusão de Curso.docx` | Proposta submetida ao colegiado |
-| [`Cronograma_Oficial.md`](Cronograma_Oficial.md) | Cronograma consolidado (prevalece sobre a proposta) |
-| [`requisitos.md`](requisitos.md) | Requisitos funcionais e não funcionais |
-| [`Revisao_Bibliografica_Anotacoes.md`](Revisao_Bibliografica_Anotacoes.md) | Anotações da revisão bibliográfica |
-| [`resumo_reconhecimento_facial_tcc.md`](resumo_reconhecimento_facial_tcc.md) | Resumo da exploração de reconhecimento facial |
-| [`relatorio_benchmark_reconhecimento_facial.md`](relatorio_benchmark_reconhecimento_facial.md) | Resultados do benchmark de reconhecimento facial |
-| `relatorios/` | Relatórios de progresso enviados aos orientadores |
-| `preparar_dataset.py` | Baixa e organiza um dataset público de rostos (LFW ou AT&T) |
-| `benchmark_face_recognition.py` | Compara 10 modelos de reconhecimento facial via DeepFace |
-| `benchmark_resultados.csv`, `benchmark_resultados.png` | Saída do benchmark |
-| `dataset/`, `dataset_teste/` | Imagens usadas no benchmark (uma pasta por pessoa) |
-
 ## Benchmark de reconhecimento facial
 
-Foram comparados 10 modelos (ArcFace, VGG-Face, Dlib, GhostFaceNet, SFace, FaceNet, FaceNet512, DeepFace, DeepID e OpenFace) no LFW, com 384 pares por modelo. Os destaques:
+Para escolher o modelo de reconhecimento facial, foram comparados 10 modelos disponíveis na biblioteca [DeepFace](https://github.com/serengil/deepface): ArcFace, VGG-Face, Dlib, GhostFaceNet, SFace, FaceNet, FaceNet512, DeepFace, DeepID e OpenFace.
 
-| Modelo | Acurácia | Tempo médio/par | Tamanho |
-|---|---|---|---|
-| ArcFace | 92,71% | 0,736 s | 130 MB |
-| SFace | 81,51% | 0,089 s | 5 MB |
+- **Dataset:** LFW (Labeled Faces in the Wild), 96 pessoas com pelo menos 15 fotos cada
+- **Pares avaliados por modelo:** 384 (192 da mesma pessoa e 192 de pessoas diferentes)
+- **Detector de rosto:** OpenCV (Haar Cascade), o mais leve, pensando no uso embarcado
 
-A tabela completa e a metodologia estão em [`relatorio_benchmark_reconhecimento_facial.md`](relatorio_benchmark_reconhecimento_facial.md).
+| # | Modelo | Acurácia | Precisão | Recall | F1 | Tempo médio/par (s) | Tamanho (MB) |
+|---|---|---|---|---|---|---|---|
+| 1 | **ArcFace** | **92,71%** | 99,40% | 85,94% | 0,9218 | 0,736 | 130 |
+| 2 | VGG-Face | 88,02% | 96,79% | 78,65% | 0,8678 | 2,379 | 580 |
+| 3 | Dlib | 84,90% | 99,26% | 70,31% | 0,8232 | 1,247 | 22 |
+| 4 | GhostFaceNet | 82,55% | 100% | 65,10% | 0,7886 | 0,664 | 16 |
+| 5 | SFace | 81,51% | 100% | 63,02% | 0,7732 | **0,089** | 5 |
+| 6 | Facenet | 76,04% | 100% | 52,08% | 0,6849 | 1,104 | 90 |
+| 7 | Facenet512 | 72,66% | 100% | 45,31% | 0,6237 | 0,845 | 90 |
+| 8 | DeepFace (Facebook) | 60,94% | 73,33% | 34,38% | 0,4681 | 12,949 | 150 |
+| 9 | DeepID | 51,56% | 80,00% | 4,17% | 0,0792 | 0,071 | 3 |
+| 10 | OpenFace | 50,78% | 100% | 1,56% | 0,0308 | 0,303 | 30 |
+
+Resultados completos em [`benchmark_resultados.csv`](benchmark_resultados.csv) e [`benchmark_resultados.png`](benchmark_resultados.png). A análise detalhada está em [`relatorio_benchmark_reconhecimento_facial.md`](relatorio_benchmark_reconhecimento_facial.md).
 
 ### Como reproduzir
 
@@ -60,12 +38,17 @@ python preparar_dataset.py --fonte lfw --saida ./dataset
 python benchmark_face_recognition.py --dataset_dir ./dataset
 ```
 
-O modelo "DeepFace" (Facebook) exige TensorFlow ≤ 2.12 e roda num ambiente separado (Python 3.10). Os detalhes estão no relatório do benchmark.
+- `preparar_dataset.py` baixa um dataset público de rostos (`--fonte lfw` ou `--fonte att`) e organiza as imagens em uma pasta por pessoa.
+- `benchmark_face_recognition.py` gera os pares, roda cada modelo em um processo isolado e salva o CSV e o gráfico. Outras opções: `--pares_por_pessoa` e `--detector_backend` (`opencv`, `retinaface`, `mtcnn`, `yunet`...).
 
-## Compilando a monografia
+O modelo "DeepFace" (Facebook) exige TensorFlow ≤ 2.12, então roda num ambiente separado com Python 3.10.
 
-O texto é editado no Overleaf. Para compilar localmente:
+## Estrutura
 
-```bash
-latexmk -pdf monografia_tcc1.tex
-```
+| Caminho | Conteúdo |
+|---|---|
+| `preparar_dataset.py` | Download e organização do dataset |
+| `benchmark_face_recognition.py` | Benchmark dos modelos de reconhecimento facial |
+| `benchmark_resultados.csv`, `benchmark_resultados.png` | Saída do benchmark |
+| `dataset/`, `dataset_teste/` | Imagens usadas no benchmark (uma pasta por pessoa) |
+| [`requisitos.md`](requisitos.md) | Requisitos funcionais e não funcionais do sistema |
