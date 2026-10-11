@@ -79,8 +79,10 @@ SAIDA (em pesquisa/resultados/):
 
 import argparse
 import itertools
+import json
 import logging
 import multiprocessing as mp
+import queue
 import random
 import time
 from dataclasses import asdict, dataclass, replace
@@ -145,6 +147,12 @@ INTERVALO_PROGRESSO = 50
 
 # Detector usado quando o rosto ja vem recortado do cache.
 DETECTOR_SEM_DETECCAO = "skip"
+
+# De quanto em quanto tempo o processo principal confere se o processo do modelo morreu.
+INTERVALO_VERIFICACAO_S = 5.0
+
+# Arquivo, dentro da pasta do cache, com o tempo de deteccao de cada imagem.
+ARQUIVO_TEMPOS_DETECCAO = "tempos_deteccao.json"
 
 
 @dataclass(frozen=True)
@@ -280,10 +288,38 @@ def calcular_resultado(
     )
 
 
+def chave_no_cache(imagem: str) -> str:
+    """Identifica a imagem no cache como `<pessoa>/<foto>`."""
+    origem = Path(imagem)
+    return f"{origem.parent.name}/{origem.name}"
+
+
 def caminho_no_cache(imagem: str, cache_dir: str | Path) -> Path:
     """Recorte de `<dataset>/<pessoa>/<foto>` fica em `<cache_dir>/<pessoa>/<foto>`."""
-    origem = Path(imagem)
-    return Path(cache_dir) / origem.parent.name / origem.name
+    return Path(cache_dir) / chave_no_cache(imagem)
+
+
+def ler_tempos_deteccao(cache_dir: str | Path) -> dict[str, float]:
+    arquivo = Path(cache_dir) / ARQUIVO_TEMPOS_DETECCAO
+    if not arquivo.exists():
+        return {}
+    return json.loads(arquivo.read_text(encoding="utf-8"))
+
+
+def gravar_tempos_deteccao(cache_dir: str | Path, tempos: dict[str, float]) -> None:
+    arquivo = Path(cache_dir) / ARQUIVO_TEMPOS_DETECCAO
+    arquivo.parent.mkdir(parents=True, exist_ok=True)
+    arquivo.write_text(json.dumps(tempos, indent=0, sort_keys=True), encoding="utf-8")
+
+
+def media_tempos_deteccao(tempos: dict[str, float], imagens: list[str]) -> float | None:
+    """Media do tempo de deteccao das imagens usadas, inclusive as que vieram do cache.
+
+    Imagens sem tempo registrado (cache criado antes deste registro existir) ficam
+    de fora da media; se nenhuma tiver tempo, devolve None.
+    """
+    medidos = [tempos[chave_no_cache(img)] for img in imagens if chave_no_cache(img) in tempos]
+    return sum(medidos) / len(medidos) if medidos else None
 
 
 def _desligar_ampliacao_retinaface() -> None:
@@ -317,7 +353,9 @@ def preparar_cache_deteccao(
     Se a imagem tiver mais de um rosto, fica o de maior area: no LFW o rosto da
     pessoa rotulada e o central e, em geral, o maior da foto. Recortes ja
     existentes no cache sao reaproveitados, o que permite retomar a rodada.
-    Tambem devolve o tempo medio de deteccao por imagem (None se tudo veio do cache).
+
+    O tempo de deteccao de cada imagem fica salvo no cache, entao o tempo medio
+    devolvido vale para todas as imagens usadas, mesmo numa rodada retomada.
     """
     import cv2
     import numpy as np
@@ -328,7 +366,7 @@ def preparar_cache_deteccao(
     if detector_backend == "retinaface" and faltando:
         _desligar_ampliacao_retinaface()
 
-    tempos = []
+    tempos = ler_tempos_deteccao(cache_dir)
     for i, imagem in enumerate(faltando, start=1):
         destino = caminho_no_cache(imagem, cache_dir)
         destino.parent.mkdir(parents=True, exist_ok=True)
@@ -341,10 +379,11 @@ def preparar_cache_deteccao(
             color_face="bgr",
             normalize_face=False,
         )
-        tempos.append(time.perf_counter() - inicio)
+        tempos[chave_no_cache(imagem)] = time.perf_counter() - inicio
         maior = max(rostos, key=lambda r: r["facial_area"]["w"] * r["facial_area"]["h"])
         cv2.imwrite(str(destino), np.clip(maior["face"], 0, 255).astype("uint8"))
         if i % INTERVALO_PROGRESSO == 0 or i == len(faltando):
+            gravar_tempos_deteccao(cache_dir, tempos)  # permite retomar sem perder tempos
             logger.info("  deteccao: %d/%d imagens", i, len(faltando))
 
     novos_pares = [
@@ -355,8 +394,7 @@ def preparar_cache_deteccao(
         )
         for p in pares
     ]
-    tempo_medio = sum(tempos) / len(tempos) if tempos else None
-    return novos_pares, tempo_medio
+    return novos_pares, media_tempos_deteccao(tempos, imagens)
 
 
 def avaliar_modelo(modelo: str, pares: list[ParImagem], detector_backend: str) -> ResultadoModelo:
@@ -417,9 +455,37 @@ def avaliar_modelo_isolado(
         target=_avaliar_modelo_worker, args=(modelo, pares, detector_backend, fila)
     )
     processo.start()
-    resultado = ResultadoModelo(**fila.get())
+    dados = aguardar_resultado(fila, processo, INTERVALO_VERIFICACAO_S)
     processo.join()
-    return resultado
+    if dados is None:
+        logger.error(
+            "O processo de %s terminou sem resultado (codigo de saida %s); "
+            "todos os pares contam como erro.",
+            modelo,
+            processo.exitcode,
+        )
+        return calcular_resultado(modelo, MatrizConfusao(), [], erros=len(pares))
+    return ResultadoModelo(**dados)
+
+
+def aguardar_resultado(fila, processo, intervalo_s: float) -> dict | None:
+    """Espera o resultado do processo isolado, sem travar se ele morrer antes de enviar.
+
+    Um modelo que falha ao carregar (Dlib sem compilar, DeepFace no ambiente
+    errado) derruba o processo filho antes do `fila.put`; sem esta verificacao,
+    o processo principal esperaria para sempre.
+    """
+    while True:
+        try:
+            return fila.get(timeout=intervalo_s)
+        except queue.Empty:
+            if processo.is_alive():
+                continue
+        # O filho pode ter enviado o resultado logo antes de terminar.
+        try:
+            return fila.get_nowait()
+        except queue.Empty:
+            return None
 
 
 def gerar_grafico(df: "pd.DataFrame", caminho_saida: str) -> None:

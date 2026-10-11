@@ -1,11 +1,17 @@
 """Testes das partes puras dos scripts de pesquisa (sem DeepFace nem download)."""
 
+import queue
+
 import pytest
 
 from benchmark_reconhecimento_facial import (
     MatrizConfusao,
+    aguardar_resultado,
     calcular_resultado,
     caminho_no_cache,
+    gravar_tempos_deteccao,
+    ler_tempos_deteccao,
+    media_tempos_deteccao,
     montar_pares,
 )
 from preparar_dataset import nome_da_pasta
@@ -80,3 +86,49 @@ def test_recorte_no_cache_mantem_pessoa_e_nome_da_foto(tmp_path):
 def test_nome_da_pasta_usa_nome_real_ou_numero():
     assert nome_da_pasta(0, ["Abdullah Gul"]) == "Abdullah_Gul"
     assert nome_da_pasta(7, None) == "pessoa_007"
+
+
+class _FilaFake:
+    """Simula a fila do multiprocessing: cada item e um resultado ou `queue.Empty`."""
+
+    def __init__(self, respostas):
+        self._respostas = list(respostas)
+
+    def get(self, timeout=None):
+        resposta = self._respostas.pop(0) if self._respostas else queue.Empty()
+        if isinstance(resposta, Exception):
+            raise resposta
+        return resposta
+
+    def get_nowait(self):
+        return self.get()
+
+
+class _ProcessoFake:
+    def __init__(self, vivo_por):
+        self._vivo_por = vivo_por
+
+    def is_alive(self):
+        self._vivo_por -= 1
+        return self._vivo_por >= 0
+
+
+def test_processo_que_morre_sem_resultado_nao_trava():
+    assert aguardar_resultado(_FilaFake([]), _ProcessoFake(vivo_por=2), 0) is None
+
+
+def test_resultado_enviado_logo_antes_de_o_processo_morrer_e_aproveitado():
+    fila = _FilaFake([queue.Empty(), {"modelo": "ArcFace"}])
+
+    assert aguardar_resultado(fila, _ProcessoFake(vivo_por=0), 0) == {"modelo": "ArcFace"}
+
+
+def test_media_de_deteccao_inclui_imagens_que_vieram_do_cache(tmp_path):
+    gravar_tempos_deteccao(tmp_path, {"ana/foto_1.jpg": 1.0, "bia/foto_2.jpg": 3.0})
+    imagens = ["lfw/ana/foto_1.jpg", "lfw/bia/foto_2.jpg", "lfw/caio/sem_tempo.jpg"]
+
+    assert media_tempos_deteccao(ler_tempos_deteccao(tmp_path), imagens) == 2.0
+
+
+def test_cache_sem_tempos_registrados_tem_media_vazia(tmp_path):
+    assert media_tempos_deteccao(ler_tempos_deteccao(tmp_path), ["lfw/ana/foto.jpg"]) is None

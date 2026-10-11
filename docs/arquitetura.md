@@ -101,7 +101,17 @@ Scripts de benchmark e preparação de dataset são experimentos. Eles não usam
 
 As dependências ficam no extra `pesquisa` do `pyproject.toml`. Quando uma ideia de pesquisa virar parte do produto, ela é reescrita como adaptador em `src/presenca/adaptadores/`.
 
-## 9. Referências
+## 9. Pendências conhecidas para o TCC2
+
+Limitações do esqueleto atual, identificadas em revisão de código em 2026-10-11. Ficaram para o TCC2 porque dependem do hardware final ou de testes reais no ônibus; corrigir agora seria chutar parâmetros ou refazer código provisório.
+
+| Pendência | Risco | Caminho previsto |
+|---|---|---|
+| A sincronização roda na mesma thread que a câmera | Em rede 4G lenta, cada envio espera até `mqtt.timeout_s`; um lote de 50 eventos pode parar o reconhecimento por minutos e alunos deixam de ser registrados (RNF-02) | Sincronização em thread própria, com uma conexão SQLite por thread e o banco em modo WAL; ou envio assíncrono confirmado pelo callback do MQTT. Decidir depois de medir no Raspberry Pi 5 + Hailo |
+| Alerta de baixa confiança sai no primeiro quadro ruim | Enquanto o aluno se aproxima da câmera, os primeiros quadros têm confiança baixa: quase todo embarque geraria também um alerta falso (RF-12) | Janela de confirmação: o alerta só sai se o aluno não for reconhecido com boa confiança em N segundos; rosto desconhecido só alerta se aparecer em vários quadros. Calibrar N e o número de quadros com testes no ônibus |
+| Filtro `face_confidence > 0` no `ReconhecedorDeepFace` | Se o detector devolver confiança 0 para um rosto real, ele é descartado; uma foto de referência pode sumir da galeria sem aviso | O adaptador DeepFace é provisório: a comparação de detectores favoreceu o RetinaFace e a versão embarcada usará TFLite/Hailo. Tratar no adaptador definitivo, identificando "nenhum rosto" pela área detectada |
+
+## 10. Referências
 
 - COCKBURN, A. *Hexagonal Architecture* (Ports and Adapters), 2005.
 - MARTIN, R. C. *Clean Architecture*. Prentice Hall, 2017.
