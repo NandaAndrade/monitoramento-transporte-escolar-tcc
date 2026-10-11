@@ -2,7 +2,45 @@
 
 Sistema IoT embarcado em ônibus escolares que registra a presença dos alunos por **reconhecimento facial (vídeo)** e **reconhecimento de voz (áudio)** e envia os dados para um sistema de gestão via rede móvel (MQTT/API).
 
-O hardware-alvo é um Raspberry Pi com o AI HAT (acelerador Hailo-10).
+## O problema
+
+No transporte escolar rural, o controle de quem embarcou e desembarcou costuma ser manual ou simplesmente não existe. Sem esse registro, a escola não sabe se um aluno chegou, o poder público não sabe se as rotas estão sendo cumpridas e falta dado para planejar o serviço.
+
+## Como o sistema funciona
+
+```
+ Ônibus                                              Gestão
+┌──────────────────────────────────────┐          ┌───────────────────────┐
+│ câmera + microfone                   │          │ TRANSCOLAR RURAL      │
+│        │                             │  MQTT /  │                       │
+│        ▼                             │   API    │ relatórios de         │
+│ reconhecimento facial e de voz       │ ───────► │ presença, rota,       │
+│ (no próprio dispositivo)             │  4G/5G   │ tempo de viagem,      │
+│        │                             │          │ segurança e custo     │
+│        ▼                             │          │                       │
+│ evento de presença ──► fila local    │          └───────────────────────┘
+│ (aluno, rota, horário, embarque/     │
+│  desembarque)                        │
+└──────────────────────────────────────┘
+```
+
+1. **Captura.** Uma câmera e um microfone no ônibus captam o aluno no embarque e no desembarque.
+2. **Reconhecimento na borda.** O dispositivo compara o rosto (e, como reforço, a voz) com os cadastros de referência dos alunos daquela rota. Todo o processamento é local, sem depender da nuvem.
+3. **Registro.** Cada identificação gera um evento de presença com aluno, ônibus, rota, horário e tipo (embarque ou desembarque). Aluno não cadastrado ou reconhecimento com baixa confiança gera um alerta.
+4. **Envio.** Os eventos vão para o sistema TRANSCOLAR RURAL por MQTT/API. Sem sinal de rede, ficam numa fila local e são reenviados quando a conexão volta, sem perder nem duplicar eventos.
+5. **Relatórios.** Gestores escolares e o poder público consultam frequência por aluno, embarque nos pontos certos da rota, tempo real contra o planejado, alertas de segurança, custo por aluno/km e rotas subutilizadas.
+
+## Decisões de projeto
+
+- **Privacidade (LGPD).** Os alunos são menores de idade, então imagem e áudio brutos **não são armazenados**. O sistema guarda só o evento de presença e os templates biométricos de referência, cadastrados com consentimento dos responsáveis e criptografados.
+- **Testes só com dados públicos.** Até a formalização legal, nenhum dado de aluno é usado; os testes usam datasets públicos de adultos (LFW e AT&T/Olivetti).
+- **Metas.** Acurácia acima de 90% e capacidade para cerca de 20 alunos por ônibus no piloto.
+- **Ambiente difícil.** O sistema precisa funcionar com vibração, iluminação variável, ângulos de câmera não controlados e conexão móvel instável.
+- **Stack.** Python, OpenCV e TensorFlow Lite, de forma modular para permitir trocar o modelo de reconhecimento. O hardware em avaliação é um Raspberry Pi com o AI HAT (acelerador Hailo-10).
+
+## Estado atual
+
+O projeto está na fase de escolha do modelo de reconhecimento facial (benchmark abaixo). Os requisitos completos estão em [`requisitos.md`](requisitos.md). Ainda não estão implementados o software embarcado, a integração com o TRANSCOLAR RURAL, o reconhecimento de voz e os relatórios.
 
 ## Benchmark de reconhecimento facial
 
