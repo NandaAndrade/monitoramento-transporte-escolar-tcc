@@ -4,7 +4,7 @@
 %
 % Aluna: Fernanda Andrade Bicalho da Cruz
 % Orientador: Janier Arias García — Coorientador: Frederico Gualberto Ferreira Coelho
-% Entrega: 11/10/2026 (Atividades 1.1 / 1.2 do TCC I)
+% Entrega: 18/10/2026 (adiada de 11/10/2026) (Atividades 1.1 / 1.2 do TCC I)
 %
 % Estrutura segue o modelo oficial do curso:
 %   docs/modelos/modelo_visao_geral_tcc.doc
@@ -133,7 +133,7 @@
     \hline
     \textbf{Versão (XX.YY)} & \textbf{Data (DD/MMM/AAAA)} & \textbf{Autor} & \textbf{Descrição} \\
     \hline
-    01.00 & 05/out/2026 & \nomealuna & Versão inicial para a entrega de 11/10/2026. \\
+    01.00 & 05/out/2026 & \nomealuna & Versão inicial para a entrega de 18/10/2026. \\
     \hline
      & & & \\
     \hline
@@ -225,7 +225,6 @@ pesquisa em eletrônica, sistemas embarcados, processamento de sinais e
 inteligência computacional, áreas em que este projeto se insere: ele combina
 hardware embarcado, processamento de imagem e áudio e aprendizado de máquina
 aplicado a um problema de gestão pública.
-\pendente{confirmar com o orientador se há um laboratório específico do DELT a citar}
 
 \subsection{Visão geral do documento}
 
@@ -365,7 +364,9 @@ presença de um ônibus em área rural, onde a conexão móvel cai com frequênc
 
 \textbf{Reconhecimento de voz.} O reconhecimento de locutor em ambiente ruidoso
 -- motor, estrada e conversas dentro do ônibus -- será tratado como mecanismo
-complementar ao reconhecimento facial.
+complementar ao reconhecimento facial. No TCC~I, a voz é tratada apenas na
+revisão bibliográfica; a seleção e a avaliação do modelo de reconhecimento de
+locutor ficam para o TCC~II.
 \pendente{incluir referências de reconhecimento de locutor em ambientes ruidosos e TensorFlow Lite embarcado}
 
 \textbf{Posicionamento do trabalho.} Os trabalhos citados tratam cada componente
@@ -470,8 +471,9 @@ revisão bibliográfica.
 
 \begin{enumerate}
     \item \textbf{Implementação do software embarcado:} pipeline de captura,
-          detecção, reconhecimento facial e de voz, retorno local por LED e
-          bipe, e fila local de eventos.
+          detecção, reconhecimento facial e de voz (incluindo a seleção e a
+          avaliação do modelo de reconhecimento de locutor), retorno local
+          por LED e bipe, e fila local de eventos.
     \item \textbf{Integração:} comunicação MQTT/API com o backend e o TRANSCOLAR
           RURAL, com sincronização offline sem perda nem duplicação, e módulo
           de cadastro e relatórios.
@@ -498,7 +500,7 @@ revisão bibliográfica.
     \multicolumn{2}{l}{\textit{TCC I}} \\
     08/2026     & 1.1 -- Levantamento de requisitos funcionais e não funcionais \\
     30/09/2026  & 1.2 -- Seleção de 10 algoritmos, implementação do benchmark e obtenção da base de dados de teste \\
-    11/10/2026  & Entrega deste documento de Visão Geral \\
+    18/10/2026  & Entrega deste documento de Visão Geral \\
     31/10/2026  & 1.2 -- Benchmark com os dados iniciais, escolha dos 2 melhores algoritmos e ampliação da base de dados \\
     31/10/2026  & 1.3 -- Projeto arquitetural, modelagem de banco de dados e diagramas UML \\
     31/10/2026  & 1.4 -- Análise de impactos socioeconômicos, ambientais e de privacidade \\

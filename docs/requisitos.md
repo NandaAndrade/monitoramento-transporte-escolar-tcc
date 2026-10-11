@@ -88,7 +88,7 @@ O transporte escolar rural carece de mecanismos automatizados de controle de pre
 |---|---|
 | RNF-01 | O sistema deve suportar o reconhecimento de até **~20 alunos por ônibus**, no cenário do piloto de 1 ônibus (TCC2). *(suposição de dimensionamento — ver seção 5)* |
 | RNF-02 | O reconhecimento de um aluno — da detecção do rosto na câmera até o retorno local (RF-20) — deve ocorrer em **no máximo 2 segundos**, para não formar fila na porta do ônibus. No benchmark preliminar em PC, o tempo médio de comparação por par foi de 0,09 s (SFace) e 0,74 s (ArcFace); o valor deve ser revalidado no hardware embarcado escolhido na Atividade 1.3. |
-| RNF-03 | A acurácia do reconhecimento de presença deve ser **superior a 90%**, conforme meta definida na proposta do projeto. |
+| RNF-03 | A acurácia do reconhecimento de presença deve ser **superior a 90%**, conforme meta definida na proposta do projeto. Entre os dois tipos de erro, **registrar o aluno errado (falso positivo) é o mais grave**: o limiar de decisão deve priorizar a precisão, mesmo à custa de recall. |
 
 ### 3.2 Confiabilidade e disponibilidade
 
@@ -136,7 +136,7 @@ O transporte escolar rural carece de mecanismos automatizados de controle de pre
 
 ## 5. Questões em aberto
 
-### 5.1 Questões resolvidas (05/10/2026)
+### 5.1 Questões resolvidas (05/10/2026 e 11/10/2026)
 
 | Questão | Decisão | Requisitos afetados |
 |---|---|---|
@@ -144,6 +144,8 @@ O transporte escolar rural carece de mecanismos automatizados de controle de pre
 | Papel do motorista/monitor | Sem perfil de usuário, mas o dispositivo dá retorno local por LED + bipe (confirmação/falha) | RF-20, seção 1 |
 | Retenção dos eventos de presença | Dispositivo: só até o envio ser confirmado. Backend: ano letivo corrente + 1 ano, depois elimina ou anonimiza | RNF-16 |
 | Consentimento dos responsáveis | Coleta fora do sistema (processo da escola). O sistema registra o consentimento, bloqueia o cadastro biométrico sem ele e trata a revogação | RF-18, RF-21 |
+| Erro mais grave no reconhecimento (11/10) | Registrar o aluno errado (falso positivo) é pior do que deixar de registrar um aluno (falso negativo). O limiar de cada modelo deve ser calibrado priorizando a precisão | RNF-03 |
+| Escopo do reconhecimento de voz (11/10) | No TCC I, a voz entra só na revisão bibliográfica. A seleção e a avaliação do modelo de locutor ficam para o TCC II | RF-02 |
 
 ### 5.2 Questões ainda em aberto
 

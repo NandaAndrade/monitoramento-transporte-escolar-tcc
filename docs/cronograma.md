@@ -43,6 +43,6 @@ aplicada, prototipagem e escolha de algoritmo/hardware.
 
 | Data | Entrega | Atividade formal relacionada |
 |---|---|---|
-| 11/10/2026 | Entrega do documento de Visão Geral | 1.1 / 1.2 |
+| 18/10/2026 | Entrega do documento de Visão Geral (adiada de 11/10/2026) | 1.1 / 1.2 |
 | 13/11/2026 | Entrega do Texto Inicial da Monografia | 1.5 |
 | 16/11/2026 a 19/11/2026 | Seminários de TCC I | 1.6 |
