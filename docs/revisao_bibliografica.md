@@ -2,7 +2,7 @@
 
 **Projeto:** Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo
 **Aluna:** Fernanda Andrade Bicalho da Cruz
-**Última atualização:** 2026-09-16
+**Última atualização:** 2026-10-11
 
 > Documento vivo — atualizado ao longo das conversas de estudo, para servir de base à seção de Revisão Bibliográfica do TCC I (Atividade 1.2) e às decisões de arquitetura (Atividade 1.3).
 
@@ -95,7 +95,7 @@ Os 10 algoritmos de reconhecimento (segunda etapa do pipeline, depois da detecç
 
 **Achado metodológico relevante:** o `DeepFace` (a biblioteca) nunca libera da memória um modelo já carregado, então medir o tempo de inferência de vários modelos no mesmo processo Python distorce os resultados dos últimos da fila (chegou a fazer o SFace parecer 47x mais lento do que é). O script de benchmark foi corrigido para isolar cada modelo em um processo separado.
 
-**Ainda pendente:** o benchmark usou o detector `opencv`/Haar Cascade (o mais fraco entre os disponíveis) — repetir com `retinaface` ou `yunet` (seção 4) pode mudar a leitura de recall de Facenet/Facenet512/SFace, que hoje aparece inesperadamente baixo.
+**Detector — RetinaFace testado (05/10/2026):** o benchmark foi repetido com `retinaface` no lugar do `opencv`/Haar Cascade (seção 4). ArcFace (96,61%) e VGG-Face (95,57%) passam a superar a meta de 90%; Facenet/Facenet512 melhoram um pouco; SFace, GhostFaceNet e Dlib não mudam, e DeepID/OpenFace continuam perto de 50%. O preço é o tempo: ~0,62 s de detecção por imagem em CPU, contra ~0,02 s do Haar. Detalhes na seção 7 do [relatório](benchmark_reconhecimento_facial.md). **Ainda pendente:** testar o `yunet`.
 
 **Algoritmos citados na literatura mas fora do benchmark empírico:**
 - MobileFaceNet e InsightFace/Buffalo_L — variantes/origem do próprio ArcFace já testado, não algoritmos concorrentes distintos.
@@ -109,3 +109,4 @@ Os 10 algoritmos de reconhecimento (segunda etapa do pipeline, depois da detecç
 - 2026-09-16: OpenCV (visão geral)
 - 2026-09-16: RetinaFace vs. YuNet (comparação e compatibilidade com o projeto)
 - 2026-09-16: Benchmark empírico dos 10 algoritmos de reconhecimento facial contra o dataset LFW; correção de uma distorção de medição de tempo (isolamento de processo); Dlib e DeepFace/Facebook viabilizados; discussão sobre MobileFaceNet, InsightFace, MediaPipe, S3FD, LBPH e Eigenfaces/Fisherfaces
+- 2026-10-05: Benchmark repetido com o detector RetinaFace (comparação OpenCV × RetinaFace nos mesmos 384 pares)

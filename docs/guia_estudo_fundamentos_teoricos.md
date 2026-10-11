@@ -341,7 +341,7 @@ OpenFace (1,6% de recall) e DeepID (4,2%) praticamente nunca disseram "mesma pes
 2. **Limiar padrão inadequado** para estas imagens (seção 7.4).
 3. **Modelos antigos de verdade** (DeepID, OpenFace), menos robustos.
 
-O relatório já aponta o próximo passo certo: **refazer com YuNet ou RetinaFace** e ver o quanto o recall sobe.
+Esse teste já foi feito com o **RetinaFace** (seção 7 do relatório), e a resposta foi "em parte". Com um detector melhor, o recall do ArcFace subiu de 86% para 94%, o do VGG-Face de 79% para 94% e o do Facenet de 53% para 65%. Mas o DeepID e o OpenFace continuaram perto de zero, e o SFace e o GhostFaceNet não mudaram. Ou seja: o suspeito 1 explicava parte do problema; para o SFace, o suspeito 2 (limiar) ficou mais forte, e para DeepID e OpenFace, o 3 (modelos antigos). Falta testar o **YuNet**.
 
 ### 8.4 A escolha preliminar: ArcFace + SFace
 
@@ -360,7 +360,7 @@ O cronograma pede para "escolher os 2 melhores de 10". O critério não é só a
 - **384 pares** é uma amostra pequena; diferenças de 1–2 pontos percentuais podem ser ruído.
 - **Tempo medido num PC**, não no Raspberry Pi/Hailo; o número absoluto vai mudar (a ordem relativa tende a se manter).
 - **Verificação 1:1**, enquanto o sistema real faz identificação 1:N (seção 4.3).
-- **Um detector e um limiar só**, ambos padrão.
+- **Dois detectores (Haar e RetinaFace) e um limiar só**, o padrão do DeepFace.
 
 ### 8.6 Mapa do código para os conceitos
 
@@ -571,7 +571,7 @@ Onde reler se errar: 1 → seção 3 · 2, 4, 5 → seção 4 · 3, 6, 7 → se�
 
 Em ordem de prioridade para o cronograma:
 
-1. **Até 31/10 (escolher os 2 modelos):** rodar o benchmark com `--detector_backend yunet` e `retinaface` e comparar o recall. Se possível, testar alguns limiares (seção 7.4).
+1. **Até 31/10 (escolher os 2 modelos):** o `retinaface` já foi testado (seção 8.3); falta rodar o benchmark com `--detector_backend yunet --cache_deteccao` e comparar o recall. Se possível, testar alguns limiares (seção 7.4) — agora é o principal suspeito do recall baixo do SFace.
 2. **Atividade 1.3 (arquitetura):** ler sobre o Raspberry Pi 5 + AI HAT (Hailo) e o fluxo de conversão de modelo (ONNX → HEF, quantização).
 3. **Atividade 1.4 (impactos):** ler os arts. 5º, 11 e 14 da LGPD e buscar material sobre viés de reconhecimento facial em crianças.
 4. **Para a revisão bibliográfica**, os artigos originais a citar:

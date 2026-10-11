@@ -78,7 +78,7 @@ A banca espera que cada modelo testado seja citado pelo seu artigo original. Hoj
 
 - **M1. Protocolo do LFW.** A literatura usa o protocolo oficial: 6.000 pares em 10 partes, com o limiar ajustado em 9 partes e testado na décima. O benchmark usou 384 pares e o limiar padrão do DeepFace. Por isso os números (51–93%) **não podem ser comparados diretamente** com os da literatura (99,0–99,7%). Opções: (a) refazer o teste no protocolo oficial; ou (b) manter os 384 pares e deixar claro no texto que é um protocolo próprio, sem comparar números absolutos.
 - **M2. Limiar de decisão.** A precisão de 100% com recall baixo (SFace, GhostFaceNet, FaceNet, OpenFace) indica um limiar conservador demais para este procedimento de teste. Calibre o limiar e reporte também métricas que não dependem dele (curva ROC e EER), como fazem DGFaceNet, ELANet e Jha (2024).
-- **M3. Detector e alinhamento.** O Haar sem alinhamento é a explicação mais provável da distância de cerca de 11 pontos entre ArcFace e SFace. Na literatura, essa distância fica abaixo de 0,5 ponto. Refaça com YuNet ou RetinaFace, com alinhamento, antes de concluir qual modelo é melhor.
+- **M3. Detector e alinhamento.** O Haar sem alinhamento é a explicação mais provável da distância de cerca de 11 pontos entre ArcFace e SFace. Na literatura, essa distância fica abaixo de 0,5 ponto. Refaça com YuNet ou RetinaFace, com alinhamento, antes de concluir qual modelo é melhor. *Atualização (05/10/2026): feito com RetinaFace, com alinhamento — a distância **aumentou** para cerca de 17 pontos (ArcFace 96,61% × SFace 79,69%; ver seção 7 do relatório do benchmark). O detector não explica a diferença; o limiar (M2) passa a ser o suspeito principal. YuNet ainda não testado.*
 - **M4. Hardware do teste de tempo.** Os tempos foram medidos no PC, não no Raspberry Pi com Hailo. Os artigos medem no próprio dispositivo (Lv: Raspberry Pi, NCS e TX2; DGFaceNet: embarcado; Surantha: Raspberry Pi). Ou meça no hardware real, ou deixe claro que os tempos são relativos entre os modelos.
 - **M5. Tempo por par × por quadro.** O relatório mede segundos por par (dois rostos). A literatura costuma usar milissegundos por imagem ou quadros por segundo (FN8). Converta, ou explique a unidade.
 - **M6. Amostra.** Com 96 pessoas e 384 pares, uma diferença de 1 ponto vale cerca de 4 pares. Informe o intervalo de confiança ou o desvio entre as 10 partes antes de afirmar que um modelo é melhor que outro.
@@ -91,7 +91,7 @@ A banca espera que cada modelo testado seja citado pelo seu artigo original. Hoj
 - **E3. Números dos artigos clássicos.** Elngar e Kayed (98,2%, Haar + PCA) e Meddeb *et al.* (93%, LBPH) testaram em bases pequenas e controladas (ORL e bases próprias com até 20 pessoas). Não use esses valores para dizer que os métodos clássicos se igualam ao deep learning.
 - **E4. Versão do Lv *et al.* (2021).** O PDF é a versão *pre-proof*. Confira os números finais na versão publicada (DOI 10.1016/j.micpro.2021.104034) e apague o PDF duplicado da pasta.
 - **E5. Contribuição do isolamento por processo.** Nenhum dos 8 artigos fala da distorção de tempo causada por vários modelos carregados no mesmo processo. Apresente isso como uma contribuição metodológica, explicando o problema e a correção.
-- **E6. Ligar ao requisito de 90%.** A meta do projeto é acurácia acima de 90%. Hoje só o ArcFace passa disso, mas com um procedimento de teste que o desfavorece (M1–M3). Não descarte SFace e GhostFaceNet antes de refazer o teste.
+- **E6. Ligar ao requisito de 90%.** A meta do projeto é acurácia acima de 90%. Com o detector Haar, só o ArcFace passa disso; com o RetinaFace, o VGG-Face também passa (95,57%). O procedimento de teste ainda desfavorece os demais (M1 e M2). Não descarte SFace e GhostFaceNet antes de refazer o teste.
 - **E7. Fusão voz + rosto.** O Jha (2024) junta as duas modalidades no nível das características e não roda em hardware embarcado. Defina se o seu sistema vai juntar as *características* (como Jha) ou as *decisões* de cada modelo, que é mais simples de embarcar, e justifique com essa referência.
 - **E8. Verificação de vivacidade.** Jha (2024) e Surantha e Sugijakko (2024) incluem proteção contra fotos e gravações. Decida se isso entra no escopo ou se fica como limitação declarada.
 
@@ -106,5 +106,5 @@ A banca espera que cada modelo testado seja citado pelo seu artigo original. Hoj
 ## 3. Próximos passos sugeridos
 
 1. Baixar pelo Portal CAPES os artigos marcados como de alta relevância na Seção 1 e conferir os itens ⚠️.
-2. Refazer o benchmark atendendo M1–M3 (protocolo oficial, limiar calibrado, YuNet ou RetinaFace com alinhamento).
+2. Refazer o benchmark atendendo M1–M3 (protocolo oficial, limiar calibrado, YuNet ou RetinaFace com alinhamento). *M3 feito em parte: RetinaFace com alinhamento testado; falta YuNet, M1 e M2.*
 3. Só depois de ler e aprovar cada artigo, incluí-lo no `referencias.bib` e na revisão bibliográfica da monografia.
