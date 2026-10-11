@@ -32,7 +32,17 @@ class ReconhecedorDeepFace:
         logger.info("Galeria carregada: %d alunos", len(self._galeria))
 
     def identificar(self, quadro: Quadro) -> list[Identificacao]:
-        return [self._comparar_com_galeria(e) for e in self._embeddings(quadro)]
+        """Um quadro com problema vira "nenhum rosto", nunca uma excecao.
+
+        Assim um quadro corrompido ou um erro passageiro do TensorFlow nao
+        interrompe o registro dos proximos alunos. O log nao inclui o quadro (RF-05).
+        """
+        try:
+            embeddings = self._embeddings(quadro)
+        except Exception:  # o DeepFace nao tem uma hierarquia de excecoes propria
+            logger.exception("Falha ao reconhecer o quadro; ele foi descartado")
+            return []
+        return [self._comparar_com_galeria(e) for e in embeddings]
 
     def _carregar_galeria(self, galeria_dir: Path) -> dict[str, list]:
         galeria = {}

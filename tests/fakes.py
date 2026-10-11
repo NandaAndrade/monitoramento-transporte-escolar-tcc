@@ -27,16 +27,15 @@ class ReconhecedorFake:
 class FilaFake:
     def __init__(self) -> None:
         self.eventos: dict[str, Evento] = {}
-        self.enviados: set[str] = set()
 
     def adicionar(self, evento: Evento) -> None:
         self.eventos.setdefault(evento.id, evento)
 
     def pendentes(self, limite: int) -> list[Evento]:
-        return [e for i, e in self.eventos.items() if i not in self.enviados][:limite]
+        return list(self.eventos.values())[:limite]
 
-    def marcar_enviado(self, evento_id: str) -> None:
-        self.enviados.add(evento_id)
+    def confirmar_envio(self, evento_id: str) -> None:
+        del self.eventos[evento_id]
 
 
 class PublicadorFake:

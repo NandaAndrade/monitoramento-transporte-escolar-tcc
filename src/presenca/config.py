@@ -15,6 +15,7 @@ class Configuracao:
     detector: str
     galeria_dir: str
     camera_indice: int
+    camera_espera_maxima_s: float
     fila_arquivo: str
     mqtt_host: str
     mqtt_porta: int
@@ -23,9 +24,19 @@ class Configuracao:
     periodo_sincronizacao_s: float
 
 
+def _resolver(caminho: str, pasta_config: Path) -> str:
+    """Caminho relativo e lido a partir da pasta do arquivo de configuracao.
+
+    Assim o dispositivo encontra a galeria e a fila mesmo rodando como servico,
+    de qualquer diretorio de trabalho.
+    """
+    return str((pasta_config / caminho).resolve())
+
+
 def carregar_configuracao(arquivo: str | Path) -> Configuracao:
     with open(arquivo, "rb") as f:
         dados = tomllib.load(f)
+    pasta_config = Path(arquivo).resolve().parent
     dispositivo = dados["dispositivo"]
     reconhecimento = dados["reconhecimento"]
     mqtt = dados["mqtt"]
@@ -36,9 +47,10 @@ def carregar_configuracao(arquivo: str | Path) -> Configuracao:
         intervalo_passagem_s=reconhecimento["intervalo_passagem_s"],
         modelo=reconhecimento["modelo"],
         detector=reconhecimento["detector"],
-        galeria_dir=reconhecimento["galeria_dir"],
+        galeria_dir=_resolver(reconhecimento["galeria_dir"], pasta_config),
         camera_indice=dados["camera"]["indice"],
-        fila_arquivo=dados["fila"]["arquivo"],
+        camera_espera_maxima_s=dados["camera"]["espera_maxima_s"],
+        fila_arquivo=_resolver(dados["fila"]["arquivo"], pasta_config),
         mqtt_host=mqtt["host"],
         mqtt_porta=mqtt["porta"],
         mqtt_topico=mqtt["topico"].format(onibus_id=dispositivo["onibus_id"]),

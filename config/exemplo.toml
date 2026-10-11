@@ -1,4 +1,5 @@
 # Copie para config/dispositivo.toml e ajuste para cada onibus.
+# Caminhos relativos sao resolvidos a partir da pasta deste arquivo.
 
 [dispositivo]
 onibus_id = "onibus-01"
@@ -6,7 +7,10 @@ rota_id = "rota-01"
 
 [reconhecimento]
 # Confianca minima (similaridade de cosseno) para aceitar uma identificacao.
-confianca_minima = 0.68
+# Similaridade = 1 - distancia. O DeepFace aceita o ArcFace ate a distancia de
+# cosseno 0.68, o que equivale a similaridade minima 1 - 0.68 = 0.32.
+# Ao trocar de modelo, recalcule a partir do limiar de distancia dele.
+confianca_minima = 0.32
 # Intervalo minimo entre duas passagens do mesmo aluno, para nao contar
 # varias vezes o mesmo embarque enquanto o rosto aparece em varios quadros.
 intervalo_passagem_s = 60
@@ -14,10 +18,12 @@ modelo = "ArcFace"
 detector = "opencv"
 # Pasta com uma subpasta por aluno (mesmo formato de pesquisa/dados/).
 # Para testes, usa o AT&T publico; nunca fotos de alunos (RC-01).
-galeria_dir = "pesquisa/dados/att"
+galeria_dir = "../pesquisa/dados/att"
 
 [camera]
 indice = 0
+# Sem quadro, espera antes de tentar de novo, dobrando ate este limite.
+espera_maxima_s = 10
 
 [fila]
 arquivo = "eventos.sqlite3"

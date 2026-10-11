@@ -1,7 +1,8 @@
 """Fila local de eventos em SQLite (store-and-forward).
 
-Sobrevive a quedas de energia e a reinicios do dispositivo. O `id` do evento e a
-chave primaria, entao gravar o mesmo evento duas vezes nao o duplica (RF-08).
+Sobrevive a quedas de energia e a reinicios do dispositivo. O `id` do evento e
+unico, entao gravar o mesmo evento duas vezes nao o duplica (RF-08). Um evento
+confirmado e apagado: o dispositivo so guarda o que ainda nao foi enviado (RNF-16).
 """
 
 import sqlite3
@@ -14,8 +15,7 @@ _ESQUEMA = """
 CREATE TABLE IF NOT EXISTS eventos (
     seq      INTEGER PRIMARY KEY AUTOINCREMENT,
     id       TEXT NOT NULL UNIQUE,
-    payload  TEXT NOT NULL,
-    enviado  INTEGER NOT NULL DEFAULT 0
+    payload  TEXT NOT NULL
 )
 """
 
@@ -35,13 +35,13 @@ class FilaSqlite:
 
     def pendentes(self, limite: int) -> list[Evento]:
         linhas = self._conexao.execute(
-            "SELECT payload FROM eventos WHERE enviado = 0 ORDER BY seq LIMIT ?", (limite,)
+            "SELECT payload FROM eventos ORDER BY seq LIMIT ?", (limite,)
         ).fetchall()
         return [evento_de_json(payload) for (payload,) in linhas]
 
-    def marcar_enviado(self, evento_id: str) -> None:
+    def confirmar_envio(self, evento_id: str) -> None:
         with self._conexao:
-            self._conexao.execute("UPDATE eventos SET enviado = 1 WHERE id = ?", (evento_id,))
+            self._conexao.execute("DELETE FROM eventos WHERE id = ?", (evento_id,))
 
     def fechar(self) -> None:
         self._conexao.close()

@@ -1,3 +1,4 @@
+import sqlite3
 from datetime import UTC, datetime
 
 from presenca.adaptadores.fila_sqlite import FilaSqlite
@@ -42,5 +43,17 @@ def test_fila_sobrevive_a_reinicio(tmp_path):
 
     reaberta = FilaSqlite(arquivo)
     assert reaberta.pendentes(10) == [evento]
-    reaberta.marcar_enviado(evento.id)
+    reaberta.confirmar_envio(evento.id)
     assert reaberta.pendentes(10) == []
+
+
+def test_evento_confirmado_e_apagado_do_arquivo(tmp_path):
+    arquivo = tmp_path / "fila.sqlite3"
+    fila = FilaSqlite(arquivo)
+    evento = _evento("ana")
+    fila.adicionar(evento)
+    fila.confirmar_envio(evento.id)
+    fila.fechar()
+
+    with sqlite3.connect(arquivo) as conexao:
+        assert conexao.execute("SELECT COUNT(*) FROM eventos").fetchone() == (0,)

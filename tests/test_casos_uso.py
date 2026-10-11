@@ -46,12 +46,12 @@ def _fila_com_eventos(quantidade: int) -> FilaFake:
     return fila
 
 
-def test_sincronizar_envia_pendentes_e_marca_como_enviados():
+def test_sincronizar_envia_pendentes_e_apaga_os_confirmados():
     fila = _fila_com_eventos(3)
     publicador = PublicadorFake()
 
     assert SincronizarEventos(fila, publicador).executar() == 3
-    assert fila.pendentes(10) == []
+    assert fila.eventos == {}
 
 
 def test_sincronizar_sem_rede_mantem_eventos_na_fila_e_retoma_depois():

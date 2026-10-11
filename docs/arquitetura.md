@@ -66,7 +66,7 @@ __main__  →  adaptadores  →  portas  ←  casos_uso  →  dominio
 - **LGPD (RF-05, RNF-07).** Nenhum adaptador grava imagem ou áudio bruto em disco, log ou rede. O quadro capturado vive só em memória durante o processamento. Logs nunca contêm o quadro nem o embedding.
 - **Idempotência (RF-08).** Todo `Evento` nasce com um `id` UUID4, gerado no domínio. A fila local ignora `id` repetido, e o backend deve fazer o mesmo.
 - **Store-and-forward (RF-07).** Todo evento é gravado primeiro na fila local; o envio é sempre feito a partir da fila pelo caso de uso `SincronizarEventos`. Nunca publicar direto sem passar pela fila.
-- **Um evento só sai da fila depois do ACK** do broker (MQTT QoS 1). Falha de envio não é erro fatal: o evento fica para a próxima sincronização.
+- **Um evento só sai da fila depois do ACK** do broker (MQTT QoS 1), e sai **apagado**: o dispositivo guarda só o que ainda não foi enviado (RNF-16). Falha de envio não é erro fatal: o evento fica para a próxima sincronização.
 - **Limiares e tempos** (confiança mínima, intervalo entre passagens, período de sincronização) vêm da configuração, nunca como número mágico no código.
 - Datas e horários sempre com fuso (`datetime` *aware*, em UTC na serialização).
 

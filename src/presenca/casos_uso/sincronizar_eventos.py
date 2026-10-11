@@ -24,6 +24,6 @@ class SincronizarEventos:
             if not self._publicador.publicar(evento):
                 logger.warning("Envio falhou; %s fica na fila para a proxima tentativa", evento.id)
                 break
-            self._fila.marcar_enviado(evento.id)
+            self._fila.confirmar_envio(evento.id)
             enviados += 1
         return enviados

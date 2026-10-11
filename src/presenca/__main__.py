@@ -21,6 +21,9 @@ from presenca.dominio.passagens import ControlePassagens
 
 logger = logging.getLogger(__name__)
 
+# Pausa depois de um erro inesperado, para um erro persistente nao encher o log.
+_ESPERA_APOS_ERRO_S = 1.0
+
 
 def montar(config: Configuracao) -> tuple[RegistrarPassagem, SincronizarEventos]:
     fila = FilaSqlite(config.fila_arquivo)
@@ -31,7 +34,7 @@ def montar(config: Configuracao) -> tuple[RegistrarPassagem, SincronizarEventos]
         intervalo_passagem=timedelta(seconds=config.intervalo_passagem_s),
     )
     registrar = RegistrarPassagem(
-        camera=CameraOpenCV(config.camera_indice),
+        camera=CameraOpenCV(config.camera_indice, config.camera_espera_maxima_s),
         reconhecedor=ReconhecedorDeepFace(config.galeria_dir, config.modelo, config.detector),
         controle=controle,
         fila=fila,
@@ -44,15 +47,25 @@ def montar(config: Configuracao) -> tuple[RegistrarPassagem, SincronizarEventos]
 
 
 def rodar(config: Configuracao) -> None:
+    """Laco principal. Um erro inesperado e registrado e o laco continua.
+
+    Os adaptadores ja tratam as falhas esperadas (quadro ruim, camera fora, rede
+    fora); isto e so a rede de seguranca para que o onibus nao pare de registrar
+    alunos por causa de um erro que ninguem previu.
+    """
     registrar, sincronizar = montar(config)
     proxima_sincronizacao = 0.0
     while True:
-        registrar.executar()
-        if time.monotonic() >= proxima_sincronizacao:
-            enviados = sincronizar.executar()
-            if enviados:
-                logger.info("%d eventos sincronizados", enviados)
-            proxima_sincronizacao = time.monotonic() + config.periodo_sincronizacao_s
+        try:
+            registrar.executar()
+            if time.monotonic() >= proxima_sincronizacao:
+                enviados = sincronizar.executar()
+                if enviados:
+                    logger.info("%d eventos sincronizados", enviados)
+                proxima_sincronizacao = time.monotonic() + config.periodo_sincronizacao_s
+        except Exception:
+            logger.exception("Erro inesperado no laco principal; continuando")
+            time.sleep(_ESPERA_APOS_ERRO_S)
 
 
 def main() -> None:

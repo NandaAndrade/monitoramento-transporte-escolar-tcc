@@ -36,7 +36,9 @@ class FilaEventos(Protocol):
         """Eventos ainda nao enviados, do mais antigo para o mais novo."""
         ...
 
-    def marcar_enviado(self, evento_id: str) -> None: ...
+    def confirmar_envio(self, evento_id: str) -> None:
+        """Apaga o evento: depois do ACK ele nao fica no dispositivo (RNF-16)."""
+        ...
 
 
 class Publicador(Protocol):
