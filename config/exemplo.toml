@@ -1,0 +1,32 @@
+# Copie para config/dispositivo.toml e ajuste para cada onibus.
+
+[dispositivo]
+onibus_id = "onibus-01"
+rota_id = "rota-01"
+
+[reconhecimento]
+# Confianca minima (similaridade de cosseno) para aceitar uma identificacao.
+confianca_minima = 0.68
+# Intervalo minimo entre duas passagens do mesmo aluno, para nao contar
+# varias vezes o mesmo embarque enquanto o rosto aparece em varios quadros.
+intervalo_passagem_s = 60
+modelo = "ArcFace"
+detector = "opencv"
+# Pasta com uma subpasta por aluno (mesmo formato de pesquisa/dados/).
+# Para testes, usa o AT&T publico; nunca fotos de alunos (RC-01).
+galeria_dir = "pesquisa/dados/att"
+
+[camera]
+indice = 0
+
+[fila]
+arquivo = "eventos.sqlite3"
+
+[mqtt]
+host = "localhost"
+porta = 1883
+topico = "transcolar/onibus/{onibus_id}/eventos"
+timeout_s = 5
+
+[sincronizacao]
+periodo_s = 10

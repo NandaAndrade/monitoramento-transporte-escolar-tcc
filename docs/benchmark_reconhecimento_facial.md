@@ -23,7 +23,7 @@
 | 9 | DeepID | 51,56% | 80,00% | 4,17% | 0,0792 | 0,071 | 3 |
 | 10 | OpenFace | 50,78% | 100% | 1,56% | 0,0308 | 0,303 | 30 |
 
-CSV completo: [benchmark_resultados.csv](benchmark_resultados.csv) · Gráfico: [benchmark_resultados.png](benchmark_resultados.png)
+CSV completo: [benchmark_resultados.csv](../pesquisa/resultados/benchmark_resultados.csv) · Gráfico: [benchmark_resultados.png](../pesquisa/resultados/benchmark_resultados.png)
 
 Todos os 10 algoritmos da tabela original da revisão bibliográfica agora têm resultado — Dlib e DeepFace (Facebook), que tinham falhado na primeira rodada, foram viabilizados (detalhes na seção 3).
 
@@ -37,7 +37,7 @@ Na primeira rodada, **SFace apareceu como o modelo mais lento de todos (4,22s/pa
 - Como o script original rodava todos os 9-10 modelos **no mesmo processo**, sequencialmente, na hora de avaliar o SFace (7º da lista) o processo já tinha VGG-Face, Facenet, Facenet512, OpenFace, DeepID e ArcFace inteiros carregados na RAM ao mesmo tempo — várias sessões TensorFlow competindo por CPU.
 - Rodando o SFace **sozinho**, sem nenhum outro modelo carregado antes: **0,089s/par** — 47x mais rápido, e consistente com a literatura.
 
-**Correção aplicada em [benchmark_face_recognition.py](benchmark_face_recognition.py):** cada modelo agora roda em um **processo separado** (`multiprocessing`, contexto `spawn`), isolando o tempo de inferência de cada um dos demais. Esse é o comportamento **padrão** do script agora; use `--sem_isolamento` só se quiser voltar ao modo antigo (mais rápido de configurar, mas com tempos possivelmente distorcidos para os últimos modelos da lista).
+**Correção aplicada em [benchmark_reconhecimento_facial.py](../pesquisa/benchmark_reconhecimento_facial.py):** cada modelo agora roda em um **processo separado** (`multiprocessing`, contexto `spawn`), isolando o tempo de inferência de cada um dos demais. Esse é o comportamento **padrão** do script agora; use `--sem_isolamento` só se quiser voltar ao modo antigo (mais rápido de configurar, mas com tempos possivelmente distorcidos para os últimos modelos da lista).
 
 A acurácia/precisão/recall de todos os modelos **não mudou** com essa correção — só o tempo médio de inferência, que agora reflete o custo real de cada modelo isoladamente (o cenário mais parecido com o que vai rodar no Raspberry Pi, já que lá você não vai ter 6 outros modelos de reconhecimento facial carregados ao mesmo tempo).
 

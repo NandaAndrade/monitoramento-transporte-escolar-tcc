@@ -3,6 +3,9 @@
 **Projeto:** Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo
 **Escopo desta conversa:** parte de **reconhecimento facial** (vídeo) — levantamento de algoritmos candidatos, trade-offs para hardware embarcado, metodologia de teste e scripts de benchmark.
 
+
+> **Nota (reorganização de 2026-10-11):** este é um registro da conversa original. Os scripts citados agora estão em [`pesquisa/`](../pesquisa/), com outros nomes e código atualizado: `benchmark_face_recognition.py` virou `pesquisa/benchmark_reconhecimento_facial.py`, e os datasets `dataset/` e `dataset_teste/` viraram `pesquisa/dados/lfw/` e `pesquisa/dados/att/`.
+
 ---
 
 ## 1. Contexto e restrições do projeto

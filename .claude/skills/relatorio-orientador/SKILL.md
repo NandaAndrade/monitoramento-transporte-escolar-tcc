@@ -29,20 +29,20 @@ como fonte de datas por ser mais confiável que o timestamp do sistema de arquiv
 
 ## Passo 1: ler o cronograma oficial
 
-**`Cronograma_Oficial.md`, na raiz do repositório, é sempre a única fonte do
+**`docs/cronograma.md` é sempre a única fonte do
 cronograma para este relatório.** Releia o arquivo inteiro a cada execução — nunca
 reaproveite uma versão memorizada de uma execução anterior, porque a aluna edita
 esse arquivo diretamente quando um prazo muda ou uma atividade nova é combinada
 com o orientador. Ele já teve datas atualizadas no meio do projeto antes, então
 tratá-lo como fixo geraria relatórios desatualizados sem que ninguém percebesse.
 
-Use as duas tabelas de `Cronograma_Oficial.md` (atividades práticas com data exata,
+Use as duas tabelas de `docs/cronograma.md` (atividades práticas com data exata,
 e entregas de documentação) como a lista real de itens a avaliar no relatório — não
 a tabela mensal do PDF da proposta, que é mais grosseira (só mês, sem dia) e serve
 aqui apenas como contexto textual de fundo para entender o que cada "Atividade X.Y"
-formal significa, caso o Cronograma_Oficial.md se refira a ela de forma abreviada.
+formal significa, caso o docs/cronograma.md se refira a ela de forma abreviada.
 
-Se `Cronograma_Oficial.md` não existir (por exemplo, foi renomeado ou apagado), não
+Se `docs/cronograma.md` não existir (por exemplo, foi renomeado ou apagado), não
 tente reconstruir o cronograma sozinho a partir do PDF/docx — pare e avise a usuária
 que o arquivo esperado não foi encontrado, e pergunte onde está o cronograma vigente
 antes de continuar.
@@ -54,7 +54,7 @@ dependências/ambiente virtual — elas não são trabalho da aluna) e classifiq
 encontrar em três baldes:
 
 1. **Documentação** — `.md`, `.docx`, `.pdf`, anotações de reunião, resumos de
-   pesquisa (ex.: `resumo_reconhecimento_facial_tcc.md`).
+   pesquisa (ex.: `docs/estudo_reconhecimento_facial.md`).
 2. **Implementação** — código-fonte, scripts, notebooks, configs, datasets gerados.
 3. **Decisões tomadas** — não costumam ter um arquivo dedicado, então procure por
    trechos de texto que indiquem uma escolha feita e sua justificativa (padrões como
@@ -70,14 +70,14 @@ confirmado — o timestamp do arquivo pode não refletir quando o trabalho realm
 aconteceu (por exemplo, se um arquivo foi copiado ou tocado sem mudança de conteúdo).
 
 Se existir um relatório anterior gerado por esta skill (veja Passo 5 — pasta
-`relatorios/`), leia o mais recente primeiro. Ele já tem o inventário e a avaliação de
+`docs/relatorios_orientador/`), leia o mais recente primeiro. Ele já tem o inventário e a avaliação de
 status da última vez; seu trabalho agora é identificar **o que mudou** desde então,
 não reconstruir tudo do zero. Isso torna relatórios sucessivos mais curtos e mais
 úteis (um orientador não precisa reler o que já leu da última vez).
 
 ## Passo 3: comparar com o cronograma e avaliar o status
 
-Para cada linha das tabelas de `Cronograma_Oficial.md` (atividades práticas e
+Para cada linha das tabelas de `docs/cronograma.md` (atividades práticas e
 entregas de documentação), determine:
 
 - **Status**: Concluída / Em andamento / Não iniciada / Adiantada (trabalho de uma
@@ -129,13 +129,13 @@ Use exatamente esta estrutura (adapte o texto, não o esqueleto):
 
 | Data prevista | Atividade | Status | Evidência |
 |---|---|---|---|
-| [DD/MM/AAAA] | [texto da linha em Cronograma_Oficial.md] | ... | ... |
+| [DD/MM/AAAA] | [texto da linha em docs/cronograma.md] | ... | ... |
 
 ## Progresso — entregas de documentação
 
 | Data prevista | Entrega | Status | Evidência |
 |---|---|---|---|
-| [DD/MM/AAAA] | [texto da linha em Cronograma_Oficial.md] | ... | ... |
+| [DD/MM/AAAA] | [texto da linha em docs/cronograma.md] | ... | ... |
 
 ## Ressalvas técnicas
 [Uma lista de achados objetivos sobre a qualidade/direção técnica do trabalho, independente
@@ -186,7 +186,7 @@ cronograma.
 
 ## Passo 5: salvar o relatório
 
-Salve o arquivo em `relatorios/relatorio_AAAA-MM-DD.md` (crie a pasta se não existir).
+Salve o arquivo em `docs/relatorios_orientador/relatorio_AAAA-MM-DD.md` (crie a pasta se não existir).
 Guardar os relatórios com data no próprio repositório cria, com o tempo, um histórico
 de progresso que compensa a ausência de `git log` — releia relatórios antigos sempre
 que precisar reconstruir "o que já foi dito ao orientador até aqui".

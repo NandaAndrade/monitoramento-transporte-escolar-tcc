@@ -18,3 +18,13 @@ __pycache__/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Configuracao local e fila de eventos do dispositivo
+config/dispositivo.toml
+*.sqlite3
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Trava de execucao do Claude Code
+.claude/scheduled_tasks.lock

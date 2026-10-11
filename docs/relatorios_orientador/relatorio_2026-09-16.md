@@ -13,11 +13,11 @@ O cronograma detalhado (`Cronograma_Oficial.md`) foi formalizado e, desde então
 
 | Data prevista | Atividade | Status | Evidência |
 |---|---|---|---|
-| 30/09/2026 | Buscar os 10 melhores algoritmos para reconhecimento facial | Concluída | [resumo_reconhecimento_facial_tcc.md](../resumo_reconhecimento_facial_tcc.md), [Revisao_Bibliografica_Anotacoes.md](../Revisao_Bibliografica_Anotacoes.md) |
-| 30/09/2026 | Entender/implementar como usar os algoritmos escolhidos | Concluída | [benchmark_face_recognition.py](../benchmark_face_recognition.py) — implementa os 10 modelos via `DeepFace.verify()`; todos executados com sucesso, incluindo o Dlib |
-| 30/09/2026 | Pegar uma base de dados para teste | Concluída | [preparar_dataset.py](../preparar_dataset.py); pastas `dataset/` (LFW, 96 pessoas) e `dataset_teste/` (AT&T/Olivetti) já baixadas |
-| 31/10/2026 | Conseguir testar com os dados iniciais a fim de escolher o algoritmo | Adiantada | [benchmark_resultados.csv](../benchmark_resultados.csv), [benchmark_resultados.png](../benchmark_resultados.png), [_dlib_resultados.csv](../_dlib_resultados.csv) |
-| 31/10/2026 | Escolher os 2 melhores de 10 | Adiantada, escolha preliminar | [relatorio_benchmark_reconhecimento_facial.md](../relatorio_benchmark_reconhecimento_facial.md) aponta ArcFace e GhostFaceNet — ver Ressalvas técnicas |
+| 30/09/2026 | Buscar os 10 melhores algoritmos para reconhecimento facial | Concluída | [resumo_reconhecimento_facial_tcc.md](../estudo_reconhecimento_facial.md), [Revisao_Bibliografica_Anotacoes.md](../revisao_bibliografica.md) |
+| 30/09/2026 | Entender/implementar como usar os algoritmos escolhidos | Concluída | [benchmark_face_recognition.py](../../pesquisa/benchmark_reconhecimento_facial.py) — implementa os 10 modelos via `DeepFace.verify()`; todos executados com sucesso, incluindo o Dlib |
+| 30/09/2026 | Pegar uma base de dados para teste | Concluída | [preparar_dataset.py](../../pesquisa/preparar_dataset.py); pastas `dataset/` (LFW, 96 pessoas) e `dataset_teste/` (AT&T/Olivetti) já baixadas |
+| 31/10/2026 | Conseguir testar com os dados iniciais a fim de escolher o algoritmo | Adiantada | [benchmark_resultados.csv](../../pesquisa/resultados/benchmark_resultados.csv), [benchmark_resultados.png](../../pesquisa/resultados/benchmark_resultados.png), [_dlib_resultados.csv](../_dlib_resultados.csv) |
+| 31/10/2026 | Escolher os 2 melhores de 10 | Adiantada, escolha preliminar | [relatorio_benchmark_reconhecimento_facial.md](../benchmark_reconhecimento_facial.md) aponta ArcFace e GhostFaceNet — ver Ressalvas técnicas |
 | 31/10/2026 | Aumentar a base de dados para realmente testar os escolhidos | Não iniciada | — |
 | 30/11/2026 | Ver como emular o ambiente do Raspberry Pi AI HAT (Hailo-10) no computador | Não iniciada | — |
 
@@ -26,7 +26,7 @@ O cronograma detalhado (`Cronograma_Oficial.md`) foi formalizado e, desde então
 | Data prevista | Entrega | Status | Evidência |
 |---|---|---|---|
 | 11/10/2026 | Entrega do documento de Visão Geral | Em andamento | [requisitos.md](../requisitos.md) — requisitos funcionais/não funcionais, restrições e rastreabilidade com a proposta; 6 pontos em aberto (seção 5) |
-| 13/11/2026 | Entrega do Texto Inicial da Monografia | Em andamento | [monografia_tcc1.tex](../monografia_tcc1.tex) — estrutura em abnTeX2 criada, capítulo de Introdução redigido; Revisão Bibliográfica, Metodologia, Avaliação de Impactos e Cronograma do TCC II ainda são placeholders |
+| 13/11/2026 | Entrega do Texto Inicial da Monografia | Em andamento | [monografia_tcc1.tex](../../monografia/monografia_tcc1.tex) — estrutura em abnTeX2 criada, capítulo de Introdução redigido; Revisão Bibliográfica, Metodologia, Avaliação de Impactos e Cronograma do TCC II ainda são placeholders |
 | 16/11 a 19/11/2026 | Seminários de TCC I | Não iniciada (fora do horizonte atual) | — |
 
 ## Ressalvas técnicas

@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "presenca"
+version = "0.1.0"
+description = "Software embarcado de monitoramento de presenca em transporte escolar rural"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+# Dependencias dos adaptadores; o dominio e os casos de uso nao precisam delas.
+camera = ["opencv-python"]
+deepface = ["deepface", "tf-keras", "numpy"]
+mqtt = ["paho-mqtt>=2.0"]
+# Scripts de benchmark e preparacao de dataset (pasta pesquisa/).
+pesquisa = [
+    "deepface",
+    "tf-keras",
+    "opencv-python",
+    "pandas",
+    "matplotlib",
+    "scikit-learn",
+    "pillow",
+]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "pesquisa", "."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# So codigo Python; os .md sao documentos e nao devem ser reformatados.
+include = ["*.py", "*.pyi"]
+extend-exclude = ["pesquisa/dados", "monografia"]
+# Pastas com modulos do projeto (para o isort separar dos pacotes externos).
+src = ["src", "pesquisa", "."]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]

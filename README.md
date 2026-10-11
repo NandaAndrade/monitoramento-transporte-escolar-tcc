@@ -40,7 +40,7 @@ No transporte escolar rural, o controle de quem embarcou e desembarcou costuma s
 
 ## Estado atual
 
-O projeto está na fase de escolha do modelo de reconhecimento facial (benchmark abaixo). Os requisitos completos estão em [`requisitos.md`](requisitos.md). Ainda não estão implementados o software embarcado, a integração com o TRANSCOLAR RURAL, o reconhecimento de voz e os relatórios.
+O projeto está na fase de escolha do modelo de reconhecimento facial (benchmark abaixo). Os requisitos completos estão em [`docs/requisitos.md`](docs/requisitos.md). O software embarcado tem só o esqueleto em `src/presenca/`; ainda não estão implementados a integração com o TRANSCOLAR RURAL, o reconhecimento de voz e os relatórios.
 
 ## Benchmark de reconhecimento facial
 
@@ -63,21 +63,21 @@ Para escolher o modelo de reconhecimento facial, foram comparados 10 modelos dis
 | 9 | DeepID | 51,56% | 80,00% | 4,17% | 0,0792 | 0,071 | 3 |
 | 10 | OpenFace | 50,78% | 100% | 1,56% | 0,0308 | 0,303 | 30 |
 
-Resultados completos em [`benchmark_resultados.csv`](benchmark_resultados.csv) e [`benchmark_resultados.png`](benchmark_resultados.png). A análise detalhada está em [`relatorio_benchmark_reconhecimento_facial.md`](relatorio_benchmark_reconhecimento_facial.md).
+Resultados completos em [`benchmark_resultados.csv`](pesquisa/resultados/benchmark_resultados.csv) e [`benchmark_resultados.png`](pesquisa/resultados/benchmark_resultados.png). A análise detalhada está em [`docs/benchmark_reconhecimento_facial.md`](docs/benchmark_reconhecimento_facial.md).
 
 ### Como reproduzir
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install deepface pandas matplotlib opencv-python tf-keras scikit-learn
+pip install -e ".[pesquisa]"
 
-python preparar_dataset.py --fonte lfw --saida ./dataset
-python benchmark_face_recognition.py --dataset_dir ./dataset
+python pesquisa/preparar_dataset.py --fonte lfw
+python pesquisa/benchmark_reconhecimento_facial.py --pares_por_pessoa 2
 ```
 
-- `preparar_dataset.py` baixa um dataset público de rostos (`--fonte lfw` ou `--fonte att`) e organiza as imagens em uma pasta por pessoa.
-- `benchmark_face_recognition.py` gera os pares, roda cada modelo em um processo isolado e salva o CSV e o gráfico. Outras opções: `--pares_por_pessoa` e `--detector_backend` (`opencv`, `retinaface`, `mtcnn`, `yunet`...).
+- `preparar_dataset.py` baixa um dataset público de rostos (`--fonte lfw` ou `--fonte att`) e organiza as imagens em `pesquisa/dados/<fonte>/`, uma pasta por pessoa.
+- `benchmark_reconhecimento_facial.py` gera os pares, roda cada modelo em um processo isolado e salva o CSV e o gráfico em `pesquisa/resultados/`. `--pares_por_pessoa 2` reproduz os 384 pares da tabela acima (o padrão do script é 3). Também aceita `--detector_backend` (`opencv`, `retinaface`, `mtcnn`, `yunet`...).
 
 O modelo "DeepFace" (Facebook) exige TensorFlow ≤ 2.12, então roda num ambiente separado com Python 3.10.
 
@@ -85,8 +85,12 @@ O modelo "DeepFace" (Facebook) exige TensorFlow ≤ 2.12, então roda num ambien
 
 | Caminho | Conteúdo |
 |---|---|
-| `preparar_dataset.py` | Download e organização do dataset |
-| `benchmark_face_recognition.py` | Benchmark dos modelos de reconhecimento facial |
-| `benchmark_resultados.csv`, `benchmark_resultados.png` | Saída do benchmark |
-| `dataset/`, `dataset_teste/` | Imagens usadas no benchmark (uma pasta por pessoa) |
-| [`requisitos.md`](requisitos.md) | Requisitos funcionais e não funcionais do sistema |
+| `src/presenca/` | Software embarcado (esqueleto): domínio, portas, casos de uso e adaptadores |
+| `tests/` | Testes automatizados (`python -m pytest`) |
+| `config/exemplo.toml` | Exemplo de configuração do dispositivo |
+| `pesquisa/` | Experimentos: `preparar_dataset.py` e `benchmark_reconhecimento_facial.py` |
+| `pesquisa/dados/lfw/`, `pesquisa/dados/att/` | Datasets públicos usados no benchmark (uma pasta por pessoa) |
+| `pesquisa/resultados/` | Saída do benchmark (CSV e gráfico) |
+| `docs/` | Documentação: [requisitos](docs/requisitos.md), [arquitetura e padrões de código](docs/arquitetura.md), [cronograma](docs/cronograma.md), revisão bibliográfica, estudos e relatórios ao orientador |
+| `docs/proposta/` | Proposta e projeto de TCC originais (PDF e DOCX) |
+| `monografia/` | Monografia em LaTeX (`monografia_tcc1.tex`, `referencias.bib`, `imagens/`) e histórico de versões |

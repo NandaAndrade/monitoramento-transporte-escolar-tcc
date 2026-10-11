@@ -5,7 +5,7 @@
 **Orientador:** Janier Arias García · **Coorientador:** Frederico Gualberto Ferreira Coelho
 **Atividade correspondente:** Atividade 1.1 — Levantamento de Requisitos e Especificação do Sistema (TCC1, 08/2026)
 
-> Este documento consolida os requisitos funcionais e não funcionais do sistema, a partir do que já está definido na [Proposta de TCC1](<Proposta - Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo.pdf>), no [Projeto de TCC](<Projeto de Trabalho de Conclusão de Curso.docx>) e no [resumo da exploração de reconhecimento facial](resumo_reconhecimento_facial_tcc.md), complementado pelas decisões tomadas em conversa com a aluna. Pontos que ainda dependem de definição posterior (Atividades 1.3 e 1.4) estão marcados explicitamente como **em aberto**.
+> Este documento consolida os requisitos funcionais e não funcionais do sistema, a partir do que já está definido na [Proposta de TCC1](proposta/proposta_tcc1.pdf), no [Projeto de TCC](proposta/projeto_tcc.docx) e no [resumo da exploração de reconhecimento facial](estudo_reconhecimento_facial.md), complementado pelas decisões tomadas em conversa com a aluna. Pontos que ainda dependem de definição posterior (Atividades 1.3 e 1.4) estão marcados explicitamente como **em aberto**.
 
 ---
 
@@ -124,7 +124,7 @@ O transporte escolar rural carece de mecanismos automatizados de controle de pre
 
 ## 4. Restrições
 
-- **RC-01** — Dados de alunos menores de idade não podem ser usados em nenhuma fase de prototipagem/teste antes da formalização legal (Atividade 1.4); os testes atuais usam apenas datasets públicos de adultos (LFW, AT&T/Olivetti — ver [resumo_reconhecimento_facial_tcc.md](resumo_reconhecimento_facial_tcc.md)).
+- **RC-01** — Dados de alunos menores de idade não podem ser usados em nenhuma fase de prototipagem/teste antes da formalização legal (Atividade 1.4); os testes atuais usam apenas datasets públicos de adultos (LFW, AT&T/Olivetti — ver [estudo_reconhecimento_facial.md](estudo_reconhecimento_facial.md)).
 - **RC-02** — O banco de dados para armazenamento local/sincronização será PostgreSQL ou Firebase, a decidir na Atividade 1.3.
 - **RC-03** — O sistema deve se integrar ao TRANSCOLAR RURAL, sistema já existente e externo ao escopo deste projeto — sua especificação técnica (API/contrato de dados) precisa ser obtida junto ao responsável pelo TRANSCOLAR RURAL (ver pendência na seção 5).
 - **RC-04** — Ambiente de operação real: interior de ônibus escolar rural, com possível instabilidade de conectividade 4G/5G.
