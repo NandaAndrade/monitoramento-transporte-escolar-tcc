@@ -11,18 +11,21 @@ dependencies = []
 
 [project.optional-dependencies]
 # Dependencias dos adaptadores; o dominio e os casos de uso nao precisam delas.
-camera = ["opencv-python"]
+# 4.10.0.84: a 5.0.0 nao traz os arquivos de cascata Haar e quebra o detector "opencv".
+camera = ["opencv-python==4.10.0.84"]
 deepface = ["deepface", "tf-keras", "numpy"]
 mqtt = ["paho-mqtt>=2.0"]
 # Scripts de benchmark e preparacao de dataset (pasta pesquisa/).
 pesquisa = [
     "deepface",
     "tf-keras",
-    "opencv-python",
+    "opencv-python==4.10.0.84",
     "pandas",
     "matplotlib",
     "scikit-learn",
     "pillow",
+    # Detector usado na comparacao OpenCV x RetinaFace (pesquisa/comparar_detectores.py).
+    "retina-face",
 ]
 dev = ["pytest", "ruff"]
 

@@ -79,7 +79,18 @@ python pesquisa/benchmark_reconhecimento_facial.py --pares_por_pessoa 2
 - `preparar_dataset.py` baixa um dataset público de rostos (`--fonte lfw` ou `--fonte att`) e organiza as imagens em `pesquisa/dados/<fonte>/`, uma pasta por pessoa.
 - `benchmark_reconhecimento_facial.py` gera os pares, roda cada modelo em um processo isolado e salva o CSV e o gráfico em `pesquisa/resultados/`. `--pares_por_pessoa 2` reproduz os 384 pares da tabela acima (o padrão do script é 3). Também aceita `--detector_backend` (`opencv`, `retinaface`, `mtcnn`, `yunet`...).
 
-O modelo "DeepFace" (Facebook) exige TensorFlow ≤ 2.12, então roda num ambiente separado com Python 3.10.
+O `opencv-python` fica fixo em `4.10.0.84` no `pyproject.toml`: a versão 5.0.0 não inclui os arquivos de cascata Haar e o detector `opencv` falha sem mensagem clara.
+
+Dois modelos exigem passos extras: o Dlib precisa ser compilado (CMake e compilador C++), e o "DeepFace" (Facebook) exige TensorFlow ≤ 2.12, então roda num ambiente separado com Python 3.10. Os detalhes estão na seção 3 do [relatório do benchmark](docs/benchmark_reconhecimento_facial.md).
+
+### Comparação de detectores
+
+O benchmark também foi rodado com o detector RetinaFace, usando `--cache_deteccao` (cada imagem é detectada uma vez só e os modelos rodam sobre os recortes). O `comparar_detectores.py` junta as duas rodadas em [`benchmark_comparacao_detectores.csv`](pesquisa/resultados/benchmark_comparacao_detectores.csv) e [`.png`](pesquisa/resultados/benchmark_comparacao_detectores.png):
+
+```bash
+python pesquisa/benchmark_reconhecimento_facial.py --pares_por_pessoa 2 --detector_backend retinaface --cache_deteccao --saida_csv pesquisa/resultados/benchmark_resultados_retinaface.csv --saida_png pesquisa/resultados/benchmark_resultados_retinaface.png
+python pesquisa/comparar_detectores.py
+```
 
 ## Estrutura
 
@@ -88,9 +99,9 @@ O modelo "DeepFace" (Facebook) exige TensorFlow ≤ 2.12, então roda num ambien
 | `src/presenca/` | Software embarcado (esqueleto): domínio, portas, casos de uso e adaptadores |
 | `tests/` | Testes automatizados (`python -m pytest`) |
 | `config/exemplo.toml` | Exemplo de configuração do dispositivo |
-| `pesquisa/` | Experimentos: `preparar_dataset.py` e `benchmark_reconhecimento_facial.py` |
+| `pesquisa/` | Experimentos: `preparar_dataset.py`, `benchmark_reconhecimento_facial.py` e `comparar_detectores.py` |
 | `pesquisa/dados/lfw/`, `pesquisa/dados/att/` | Datasets públicos usados no benchmark (uma pasta por pessoa) |
-| `pesquisa/resultados/` | Saída do benchmark (CSV e gráfico) |
+| `pesquisa/resultados/` | Saídas do benchmark e da comparação de detectores (CSV e gráficos) |
 | `docs/` | Documentação: [requisitos](docs/requisitos.md), [arquitetura e padrões de código](docs/arquitetura.md), [cronograma](docs/cronograma.md), revisão bibliográfica, estudos e relatórios ao orientador |
-| `docs/proposta/` | Proposta e projeto de TCC originais (PDF e DOCX) |
-| `monografia/` | Monografia em LaTeX (`monografia_tcc1.tex`, `referencias.bib`, `imagens/`) e histórico de versões |
+| `docs/proposta/`, `docs/modelos/` | Proposta e projeto de TCC originais; modelos de documento do curso |
+| `monografia/` | Entregáveis em LaTeX: `monografia_tcc1.tex` e `visao_geral.tex`, com `referencias.bib`, `imagens/` e o histórico de versões |

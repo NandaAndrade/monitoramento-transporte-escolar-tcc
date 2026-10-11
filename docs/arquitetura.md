@@ -33,11 +33,11 @@ tests/              # pytest; fakes das portas em tests/fakes.py
 config/             # exemplos de configuração
 ```
 
-O resto do repositório: `docs/` (documentação interna em Markdown), `monografia/` (entregável LaTeX para o Overleaf) e `pesquisa/` (experimentos).
+O resto do repositório: `docs/` (documentação interna em Markdown, proposta e modelos do curso), `monografia/` (entregáveis LaTeX para o Overleaf: monografia e visão geral) e `pesquisa/` (experimentos).
 
 **Nomes de arquivos e pastas:** minúsculas, sem espaços nem acentos, palavras separadas por `_`, em português. Datas no formato `AAAA-MM-DD`.
 
-Os scripts de pesquisa ficam em `pesquisa/` (`benchmark_reconhecimento_facial.py`, `preparar_dataset.py`), com os datasets em `pesquisa/dados/` e as saídas em `pesquisa/resultados/`. Eles seguem os padrões de código, mas não a arquitetura em camadas (ver seção 8).
+Os scripts de pesquisa ficam em `pesquisa/` (`preparar_dataset.py`, `benchmark_reconhecimento_facial.py`, `comparar_detectores.py`), com os datasets em `pesquisa/dados/` e as saídas em `pesquisa/resultados/`. Eles seguem os padrões de código, mas não a arquitetura em camadas (ver seção 8).
 
 ## 3. Regra de dependência
 

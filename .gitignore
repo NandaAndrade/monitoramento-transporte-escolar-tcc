@@ -2,6 +2,11 @@
 .venv/
 .venv_deepface_legacy/
 __pycache__/
+
+# Rostos recortados pelo benchmark (--cache_deteccao), regeneraveis
+pesquisa/cache_deteccao/
+# Logs das rodadas do benchmark
+*.log
 *.pyc
 
 # Artefatos de LaTeX

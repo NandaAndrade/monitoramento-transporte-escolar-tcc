@@ -1,0 +1,11 @@
+modelo,acuracia,precisao,recall,f1,tempo_medio_s,pares_avaliados,erros,tamanho_aprox_mb,detector,tempo_deteccao_s
+ArcFace,0.9661,0.9945,0.9375,0.9651,0.5675,384,0,130,retinaface,0.6184
+VGG-Face,0.9557,0.973,0.9375,0.9549,1.1029,384,0,580,retinaface,0.6184
+Dlib,0.849,0.9718,0.7188,0.8263,1.0602,384,0,22,retinaface,0.6184
+Facenet,0.8255,1.0,0.651,0.7886,0.6112,384,0,90,retinaface,0.6184
+GhostFaceNet,0.8177,1.0,0.6354,0.7771,0.4688,384,0,16,retinaface,0.6184
+SFace,0.7969,1.0,0.5938,0.7451,0.0435,384,0,5,retinaface,0.6184
+Facenet512,0.7656,1.0,0.5312,0.6939,0.6849,384,0,90,retinaface,0.6184
+DeepFace,0.5547,0.5429,0.6927,0.6087,3.4957,384,0,150,retinaface,0.6184
+DeepID,0.5312,0.8333,0.0781,0.1429,0.026,384,0,3,retinaface,0.6184
+OpenFace,0.5104,0.8333,0.026,0.0505,0.4577,384,0,30,retinaface,0.6184

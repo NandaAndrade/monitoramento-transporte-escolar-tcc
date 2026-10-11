@@ -81,7 +81,26 @@ Ambos são modelos de **detecção** facial (localizam o rosto na imagem — bou
 ### Decisão em aberto para o TCC
 - [ ] Citar ambos os modelos na revisão bibliográfica (Atividade 1.2) como parte da análise de trade-off de detecção facial.
 - [ ] Decisão final entre RetinaFace e YuNet fica para o TCC II, após testes empíricos de acurácia e tempo de resposta no hardware escolhido.
-- [ ] Ainda em aberto: modelo de **reconhecimento** facial (segunda etapa do pipeline) a ser usado em conjunto com o detector — candidatos a pesquisar: ArcFace, SFace.
+- [x] ~~Ainda em aberto: modelo de **reconhecimento** facial (segunda etapa do pipeline) a ser usado em conjunto com o detector — candidatos a pesquisar: ArcFace, SFace.~~ **Resolvido empiricamente (ver seção 5 abaixo).**
+
+---
+
+## 5. Reconhecimento facial: benchmark empírico dos 10 candidatos
+
+Os 10 algoritmos de reconhecimento (segunda etapa do pipeline, depois da detecção discutida na seção 4) foram implementados via biblioteca `DeepFace` e testados contra 384 pares de imagens do dataset LFW. Resultado completo em [benchmark_reconhecimento_facial.md](benchmark_reconhecimento_facial.md) e [benchmark_resultados.csv](../pesquisa/resultados/benchmark_resultados.csv).
+
+**Ranking por acurácia:** ArcFace (92,71%) > VGG-Face (88,02%) > Dlib (84,90%) > GhostFaceNet (82,55%) > SFace (81,51%) > Facenet (76,04%) > Facenet512 (72,66%) > DeepFace/Facebook (60,94%) > DeepID (51,56%) > OpenFace (50,78%).
+
+**Recomendação para o hardware do projeto:** **ArcFace** (melhor acurácia, tempo de inferência aceitável) + **SFace** (mais leve em disco — 5 MB — e o mais rápido de todos após corrigir uma distorção de medição causada por rodar vários modelos TensorFlow no mesmo processo; ver relatório para detalhes). GhostFaceNet segue como alternativa leve de reserva.
+
+**Achado metodológico relevante:** o `DeepFace` (a biblioteca) nunca libera da memória um modelo já carregado, então medir o tempo de inferência de vários modelos no mesmo processo Python distorce os resultados dos últimos da fila (chegou a fazer o SFace parecer 47x mais lento do que é). O script de benchmark foi corrigido para isolar cada modelo em um processo separado.
+
+**Ainda pendente:** o benchmark usou o detector `opencv`/Haar Cascade (o mais fraco entre os disponíveis) — repetir com `retinaface` ou `yunet` (seção 4) pode mudar a leitura de recall de Facenet/Facenet512/SFace, que hoje aparece inesperadamente baixo.
+
+**Algoritmos citados na literatura mas fora do benchmark empírico:**
+- MobileFaceNet e InsightFace/Buffalo_L — variantes/origem do próprio ArcFace já testado, não algoritmos concorrentes distintos.
+- MediaPipe Face Detection e S3FD — são detectores, não reconhecedores; pertencem à discussão da seção 4, não a esta.
+- Eigenfaces, Fisherfaces e LBPH — métodos clássicos pré-deep-learning, mencionados na monografia como marco histórico, mas fora do benchmark por não estarem disponíveis na biblioteca `DeepFace` e por serem, segundo a literatura, muito sensíveis às condições de iluminação/ângulo esperadas no ônibus escolar.
 
 ---
 
@@ -89,3 +108,4 @@ Ambos são modelos de **detecção** facial (localizam o rosto na imagem — bou
 - 2026-09-16: TensorFlow (visão geral)
 - 2026-09-16: OpenCV (visão geral)
 - 2026-09-16: RetinaFace vs. YuNet (comparação e compatibilidade com o projeto)
+- 2026-09-16: Benchmark empírico dos 10 algoritmos de reconhecimento facial contra o dataset LFW; correção de uma distorção de medição de tempo (isolamento de processo); Dlib e DeepFace/Facebook viabilizados; discussão sobre MobileFaceNet, InsightFace, MediaPipe, S3FD, LBPH e Eigenfaces/Fisherfaces

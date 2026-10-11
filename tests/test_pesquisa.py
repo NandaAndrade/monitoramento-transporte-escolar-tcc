@@ -2,7 +2,12 @@
 
 import pytest
 
-from benchmark_reconhecimento_facial import MatrizConfusao, calcular_resultado, montar_pares
+from benchmark_reconhecimento_facial import (
+    MatrizConfusao,
+    calcular_resultado,
+    caminho_no_cache,
+    montar_pares,
+)
 from preparar_dataset import nome_da_pasta
 
 
@@ -64,6 +69,12 @@ def test_modelo_sem_pares_avaliados_tem_metricas_vazias():
 
     assert resultado.acuracia is None
     assert resultado.erros == 5
+
+
+def test_recorte_no_cache_mantem_pessoa_e_nome_da_foto(tmp_path):
+    destino = caminho_no_cache(str(tmp_path / "lfw" / "ana" / "foto_1.jpg"), tmp_path / "cache")
+
+    assert destino == tmp_path / "cache" / "ana" / "foto_1.jpg"
 
 
 def test_nome_da_pasta_usa_nome_real_ou_numero():

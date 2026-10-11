@@ -1,0 +1,524 @@
+% ============================================================================
+% Visão Geral do Projeto de TCC — Sistema IoT para Monitoramento da Presença
+% de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo
+%
+% Aluna: Fernanda Andrade Bicalho da Cruz
+% Orientador: Janier Arias García — Coorientador: Frederico Gualberto Ferreira Coelho
+% Entrega: 11/10/2026 (Atividades 1.1 / 1.2 do TCC I)
+%
+% Estrutura segue o modelo oficial do curso:
+%   docs/modelos/modelo_visao_geral_tcc.doc
+% (Introdução -> Visão Geral do Trabalho -> Metodologia e Cronograma ->
+%  Referências bibliográficas). As instruções do modelo foram omitidas,
+%  conforme o próprio modelo pede para a versão entregue.
+%
+% Para compilar: envie este arquivo, "referencias.bib" e a pasta "imagens/"
+% juntos para um projeto no Overleaf (mesmo procedimento de monografia_tcc1.tex).
+%
+% Antes de entregar:
+%   - remover todas as marcações \pendente{...} (aparecem em vermelho no PDF);
+%   - conferir as referências marcadas com "% CONFERIR" em referencias.bib.
+% ============================================================================
+
+\documentclass[
+    12pt,
+    oneside,
+    a4paper,
+    article,
+    english,
+    brazil
+    ]{abntex2}
+
+% ----------------------------------------------------------------------------
+% Pacotes
+% ----------------------------------------------------------------------------
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\usepackage[alf]{abntex2cite}
+
+% Marca trechos que ainda dependem de informação/decisão — remover antes da entrega.
+\newcommand{\pendente}[1]{\textcolor{red}{\textbf{[PENDENTE: #1]}}}
+
+% ----------------------------------------------------------------------------
+% Dados do documento (equivalentes aos campos de autotexto do modelo .doc)
+% ----------------------------------------------------------------------------
+\newcommand{\nomeprojeto}{Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo}
+\newcommand{\nomealuna}{Fernanda Andrade Bicalho da Cruz}
+\newcommand{\versaodoc}{01.00}
+\newcommand{\datadoc}{5 de outubro de 2026}
+
+\titulo{Visão Geral do Projeto -- \nomeprojeto}
+\autor{\nomealuna}
+\local{Belo Horizonte}
+\data{2026}
+
+\makeatletter
+\hypersetup{
+    pdftitle={\@title},
+    pdfauthor={\@author},
+    pdfcreator={LaTeX com abnTeX2},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    bookmarksdepth=4
+}
+\makeatother
+
+% ============================================================================
+\begin{document}
+
+\selectlanguage{brazil}
+\frenchspacing
+
+% ----------------------------------------------------------------------------
+% Capa (conforme modelo: UFMG / Curso / TCC I / título / versão / data / aluno)
+% ----------------------------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+    \includegraphics[width=3.5cm]{imagens/ufmg_logo.png}
+
+    \vspace{0.5cm}
+    {\large Universidade Federal de Minas Gerais}\\
+    {\large Curso de Engenharia de Sistemas}\\
+    {\large Trabalho de Conclusão de Curso I}
+\end{center}
+
+\vspace{4cm}
+\begin{flushright}
+    {\LARGE\textbf{Visão Geral do Projeto}}\\[0.5cm]
+    \begin{minipage}{11cm}
+        \raggedleft\large \nomeprojeto
+    \end{minipage}
+\end{flushright}
+
+\vspace{2cm}
+\begin{flushright}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Versão:} & \versaodoc \\
+        \hline
+        \textbf{Data:}   & \datadoc \\
+        \hline
+    \end{tabular}
+\end{flushright}
+
+\vfill
+\begin{center}
+    {\large Aluna: \nomealuna}\\[0.2cm]
+    Orientador: Janier Arias García\\
+    Coorientador: Frederico Gualberto Ferreira Coelho
+\end{center}
+\end{titlepage}
+
+% ----------------------------------------------------------------------------
+% Histórico de revisões
+% ----------------------------------------------------------------------------
+\begin{center}
+    {\large\textbf{Histórico de revisões}}
+\end{center}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|l|X|}
+    \hline
+    \textbf{Versão (XX.YY)} & \textbf{Data (DD/MMM/AAAA)} & \textbf{Autor} & \textbf{Descrição} \\
+    \hline
+    01.00 & 05/out/2026 & \nomealuna & Versão inicial para a entrega de 11/10/2026. \\
+    \hline
+     & & & \\
+    \hline
+\end{tabularx}
+\end{table}
+
+\newpage
+
+% ----------------------------------------------------------------------------
+% Sumário
+% ----------------------------------------------------------------------------
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\newpage
+
+% ============================================================================
+% 1. INTRODUÇÃO
+% ============================================================================
+\section{Introdução}
+
+\subsection{Propósito}
+
+Este documento especifica o trabalho a ser desenvolvido pela aluna de
+Engenharia de Sistemas \nomealuna, fornecendo ao professor orientador e ao
+professor da disciplina as informações necessárias para sua avaliação e
+aprovação. Além disso, o documento servirá como base para o desenvolvimento do
+projeto ao longo dos dois semestres de sua realização e também pode servir para
+gerar partes dos textos das monografias de TCC~I e TCC~II.
+
+\subsection{Público Alvo}
+
+Este documento se destina à aluna e aos profissionais envolvidos na orientação
+de seu trabalho de conclusão de curso.
+
+\subsection{Motivação e justificativa}
+
+\textbf{Problema.} O transporte escolar rural é essencial para garantir o
+acesso à educação em regiões afastadas, mas o controle de quais alunos
+embarcam e desembarcam dos ônibus ainda depende, em geral, de processos
+manuais. Esse registro é sujeito a falhas, difícil de auditar e não fornece
+dados confiáveis sobre a operação das rotas.
+
+\textbf{Importância.} A falta de um registro confiável tem consequências em três
+frentes. Na segurança dos estudantes, não é possível afirmar com certeza se um
+aluno embarcou, se desembarcou no ponto correto ou se ficou para trás. Na
+transparência da gestão pública, o serviço -- custeado com recursos públicos
+-- não tem uma forma auditável de comprovar que foi prestado. Na eficiência
+operacional, a falta de dados impede que os gestores identifiquem rotas
+subutilizadas, atrasos recorrentes ou o custo real por aluno transportado.
+
+\textbf{Benefícios esperados.} O trabalho propõe um dispositivo de Internet das
+Coisas (IoT) embarcado no ônibus que identifica automaticamente cada aluno no
+embarque e no desembarque, por reconhecimento facial e de voz, sem exigir
+nenhuma ação do aluno ou do motorista. Os eventos de presença são enviados ao
+sistema TRANSCOLAR RURAL, já utilizado na gestão do transporte escolar. Com
+isso, espera-se: (i) maior segurança física dos estudantes, com alertas
+imediatos de falha de reconhecimento ou embarque irregular; (ii) registros
+auditáveis de presença, que dão transparência ao uso dos recursos públicos; e
+(iii) relatórios de presença, localização, tempo de viagem e eficiência das
+rotas para os gestores escolares. O sistema é projetado desde o início com
+foco em privacidade: nenhuma imagem ou áudio dos alunos é armazenado, apenas
+o evento de presença resultante.
+
+\subsection{Objetivos}
+
+O \textbf{objetivo geral} deste trabalho é projetar e implementar um dispositivo
+IoT embarcado em ônibus escolares rurais que registre a presença dos alunos
+por reconhecimento de voz e vídeo, integrando os dados gerados ao sistema
+TRANSCOLAR RURAL, de modo a aumentar a segurança dos estudantes e a eficiência
+operacional do transporte escolar.
+
+Os \textbf{objetivos específicos} são:
+
+\begin{enumerate}
+    \item desenvolver um protótipo de hardware IoT dotado de câmera e microfone;
+    \item implementar algoritmos de reconhecimento facial e de voz adequados às
+          condições reais de operação no interior de um ônibus;
+    \item integrar o dispositivo ao sistema TRANSCOLAR RURAL por meio de rede móvel;
+    \item viabilizar a geração de relatórios inteligentes voltados a gestores escolares;
+    \item avaliar o desempenho, a segurança e a confiabilidade do sistema proposto.
+\end{enumerate}
+
+\subsection{Local de realização}
+
+O trabalho é realizado no Departamento de Engenharia Eletrônica (DELT) da
+Escola de Engenharia da Universidade Federal de Minas Gerais, departamento ao
+qual pertencem o orientador e o coorientador. O DELT atua no ensino e na
+pesquisa em eletrônica, sistemas embarcados, processamento de sinais e
+inteligência computacional, áreas em que este projeto se insere: ele combina
+hardware embarcado, processamento de imagem e áudio e aprendizado de máquina
+aplicado a um problema de gestão pública.
+\pendente{confirmar com o orientador se há um laboratório específico do DELT a citar}
+
+\subsection{Visão geral do documento}
+
+\begin{itemize}
+    \item A Seção~\ref{sec:visao-geral} apresenta uma visão geral do trabalho,
+          caracterizando o seu escopo e fazendo uma breve revisão bibliográfica
+          sobre o assunto, de modo a situar o trabalho proposto em relação a
+          outros apresentados na literatura;
+    \item a Seção~\ref{sec:metodologia} descreve a metodologia a ser empregada
+          no trabalho e o cronograma do ciclo completo (TCC~I e TCC~II);
+    \item a Seção \textit{Referências} apresenta as referências bibliográficas utilizadas.
+\end{itemize}
+
+% ============================================================================
+% 2. VISÃO GERAL DO TRABALHO
+% ============================================================================
+\section{Visão Geral do Trabalho}
+\label{sec:visao-geral}
+
+O trabalho consiste em um dispositivo embarcado instalado na porta do ônibus
+escolar, composto por câmera, microfone e uma unidade de processamento local.
+Quando o aluno embarca ou desembarca, o dispositivo detecta o rosto, compara-o
+com as referências biométricas cadastradas e, opcionalmente, usa a voz como
+reforço. Todo o reconhecimento é feito no próprio dispositivo (computação de
+borda), sem depender de processamento em nuvem. O resultado é indicado na
+hora ao motorista ou monitor por um LED e um sinal sonoro, e gera um evento de
+presença (aluno, ônibus, rota, horário e tipo de evento). A imagem e o áudio
+capturados são descartados.
+
+Os eventos são enviados ao backend e ao TRANSCOLAR RURAL pela rede móvel, por
+meio do protocolo MQTT. Como a conectividade nas rotas rurais é intermitente,
+o dispositivo mantém uma fila local e reenvia os eventos quando a conexão volta,
+sem perda nem duplicação. A partir desses dados, o sistema gera relatórios de
+presença, localização, tempo de viagem, segurança, eficiência operacional e
+qualidade do serviço para os gestores escolares.
+
+O ciclo completo se divide em duas etapas. O \textbf{TCC~I} cobre a
+especificação e a concepção: levantamento de requisitos, revisão bibliográfica
+com avaliação empírica de algoritmos, projeto arquitetural e análise de
+impactos. O \textbf{TCC~II} cobre a realização: implementação do software
+embarcado, integração com o TRANSCOLAR RURAL, simulação, teste piloto em
+ônibus real e validação das métricas.
+
+\subsection{Escopo do trabalho}
+
+\textbf{O que se pretende fazer.} Especificar, projetar, implementar e validar,
+em um piloto com um ônibus, um sistema que contempla:
+
+\begin{itemize}
+    \item reconhecimento facial no embarque e no desembarque, com
+          reconhecimento de voz como reforço;
+    \item retorno local ao motorista ou monitor por LED e sinal sonoro, sem tela
+          nem login;
+    \item registro de eventos de presença com funcionamento offline e
+          sincronização posterior, sem perda nem duplicação;
+    \item integração com o TRANSCOLAR RURAL via MQTT/API;
+    \item relatórios para gestores escolares;
+    \item cadastro de alunos, rotas, ônibus e referências biométricas, com
+          registro e revogação do consentimento dos responsáveis.
+\end{itemize}
+
+As principais metas quantitativas definidas no levantamento de requisitos são:
+acurácia de reconhecimento superior a 90\%, tempo de no máximo 2~segundos por
+aluno entre a detecção e o retorno local, e capacidade para cerca de 20 alunos
+por ônibus no piloto. Os requisitos funcionais e não funcionais completos estão
+no documento de requisitos do projeto.
+
+\textbf{O que não se pretende fazer.} Não fazem parte do escopo: interfaces
+(aplicativo, tela ou login) para motoristas, monitores ou responsáveis; a coleta
+do consentimento dos responsáveis, que é um processo administrativo da escola
+(o sistema apenas o registra); o desenvolvimento ou a alteração do próprio
+TRANSCOLAR RURAL; e o uso de dados reais de alunos durante a prototipagem, que
+utiliza apenas bases públicas de adultos.
+
+\textbf{Inserção em um projeto maior.} O trabalho complementa o TRANSCOLAR
+RURAL, sistema já utilizado na gestão do transporte escolar rural. O dispositivo
+proposto funciona como uma nova fonte automática de dados de presença para esse
+sistema, que hoje depende de registro manual.
+\pendente{a especificação técnica (API/protocolo) do TRANSCOLAR RURAL foi solicitada ao orientador; detalhar aqui quando disponível}
+
+\textbf{Situação atual e situação a ser alcançada.} Atualmente, o controle de
+presença nos ônibus é manual, sem registro auditável e sem dados operacionais
+consolidados. Ao final do trabalho, espera-se um protótipo validado em um
+ônibus real que registre automaticamente o embarque e o desembarque de cada
+aluno, alerte em caso de falha ou embarque irregular, funcione mesmo sem sinal
+de rede e entregue esses dados ao TRANSCOLAR RURAL. Tudo isso respeitando a
+Lei Geral de Proteção de Dados Pessoais \cite{brasil2018lgpd}, por se tratar
+de dados biométricos de menores de idade.
+
+\subsection{Revisão bibliográfica}
+
+\textbf{Métodos clássicos de reconhecimento facial.} Antes do aprendizado
+profundo, o reconhecimento facial era feito com métodos estatísticos e
+descritores de textura. O Eigenfaces \cite{turk1991eigenfaces} representa cada
+rosto como uma combinação de componentes principais (PCA). O Fisherfaces
+\cite{belhumeur1997eigenfaces} usa análise discriminante linear para maximizar
+a separação entre indivíduos. O LBPH \cite{ahonen2004face} descreve o rosto por
+histogramas de padrões binários locais. Esses métodos têm custo computacional
+baixo, mas são muito sensíveis a variações de iluminação, ângulo e expressão --
+justamente as condições esperadas dentro de um ônibus em movimento. Por isso,
+entram neste trabalho apenas como marco histórico.
+
+\textbf{Reconhecimento facial com aprendizado profundo.} As abordagens atuais
+usam redes neurais profundas para mapear cada rosto em um vetor de
+características (\textit{embedding}), de forma que rostos da mesma pessoa
+fiquem próximos e rostos de pessoas diferentes fiquem distantes. O FaceNet
+\cite{schroff2015facenet} introduziu o treinamento por \textit{triplet loss}
+para aprender esse espaço diretamente. O ArcFace \cite{deng2019arcface} propôs
+uma margem angular aditiva na função de perda, o que torna os
+\textit{embeddings} mais discriminativos e levou a resultados de referência em
+bases públicas. O SFace \cite{zhong2021sface} usa uma perda com restrição
+sigmoide na hiperesfera, pensada para ser mais robusta a imagens de baixa
+qualidade, e tem um modelo muito leve, adequado a hardware embarcado.
+
+\textbf{Detecção facial.} O reconhecimento depende de uma etapa anterior, que
+localiza e alinha o rosto na imagem. O RetinaFace \cite{deng2020retinaface} é
+um detector de estágio único com foco em precisão, robusto a rostos pequenos,
+parcialmente cobertos ou em ângulos difíceis. O YuNet \cite{wu2023yunet} tem
+foco em eficiência: é um detector de poucos kilobytes, integrado nativamente
+ao OpenCV e pensado para execução em tempo real em dispositivos de borda. A
+escolha entre os dois é uma troca entre robustez e custo computacional, que
+este trabalho avalia empiricamente.
+
+\textbf{Bases de dados e ferramentas de avaliação.} Para comparar os algoritmos
+de forma justa, este trabalho usa a biblioteca DeepFace
+\cite{serengil2020lightface}, que reúne dez modelos de reconhecimento atrás de
+uma mesma interface e do mesmo pipeline de detecção e alinhamento. Os testes
+usam bases públicas de adultos que consentiram com o uso em pesquisa: a
+\textit{Labeled Faces in the Wild} (LFW) \cite{huang2007lfw}, com fotos em
+condições não controladas, e a base AT\&T/Olivetti \cite{samaria1994att}.
+
+\textbf{Comunicação em IoT.} O MQTT \cite{oasis2019mqtt} é um protocolo de
+mensagens do tipo publicação/assinatura, leve e projetado para redes instáveis
+ou de baixa largura de banda. Seus níveis de qualidade de serviço permitem
+garantir a entrega das mensagens. Isso o torna adequado para enviar eventos de
+presença de um ônibus em área rural, onde a conexão móvel cai com frequência.
+
+\textbf{Reconhecimento de voz.} O reconhecimento de locutor em ambiente ruidoso
+-- motor, estrada e conversas dentro do ônibus -- será tratado como mecanismo
+complementar ao reconhecimento facial.
+\pendente{incluir referências de reconhecimento de locutor em ambientes ruidosos e TensorFlow Lite embarcado}
+
+\textbf{Posicionamento do trabalho.} Os trabalhos citados tratam cada componente
+isoladamente: detecção, reconhecimento ou comunicação. A contribuição deste
+trabalho é integrá-los em um sistema embarcado com restrições reais (hardware
+de baixo custo, conectividade intermitente, ambiente com vibração e iluminação
+variável, dados de menores de idade) e avaliar empiricamente quais algoritmos
+atendem a essas restrições.
+\pendente{citar trabalhos correlatos de controle de presença em transporte escolar (ex.: RFID, biometria, IoT) e comparar com a proposta}
+
+% ============================================================================
+% 3. METODOLOGIA E CRONOGRAMA
+% ============================================================================
+\section{Metodologia e Cronograma}
+\label{sec:metodologia}
+
+\subsection{Atividades do TCC I}
+
+\textbf{Atividade 1.1 -- Levantamento de requisitos.} Os requisitos funcionais
+e não funcionais foram levantados a partir da proposta do projeto e de
+decisões tomadas com a orientação. Eles estão consolidados em um documento de
+requisitos com identificadores rastreáveis até os objetivos específicos. Entre
+as decisões já tomadas estão: não armazenar imagem nem áudio dos alunos; tempo
+máximo de 2~s por reconhecimento; retorno local por LED e bipe; retenção dos
+eventos no dispositivo apenas até a sincronização e, no servidor, pelo ano
+letivo mais um ano; e registro do consentimento dos responsáveis como
+pré-requisito para o cadastro biométrico.
+
+\textbf{Atividade 1.2 -- Revisão bibliográfica e avaliação empírica.} Além da
+pesquisa bibliográfica, foi feito um benchmark com os dez modelos de
+reconhecimento facial disponíveis na biblioteca DeepFace (VGG-Face, FaceNet,
+FaceNet512, OpenFace, DeepFace, DeepID, ArcFace, Dlib, SFace e GhostFaceNet).
+A ferramenta foi escolhida porque aplica o mesmo pipeline de detecção e
+alinhamento a todos os modelos, o que garante uma comparação justa. Cada
+modelo foi avaliado em 384 pares de imagens da base LFW (96 pessoas, com pares
+da mesma pessoa e de pessoas diferentes), medindo acurácia, precisão,
+\textit{recall}, F1, tempo médio por par e tamanho do modelo. Cada modelo roda
+em um processo separado, para que o tempo medido não seja distorcido pelos
+modelos carregados antes. A Tabela~\ref{tab:benchmark} mostra os melhores
+resultados obtidos com o detector OpenCV.
+
+\begin{table}[H]
+\centering
+\caption{Resultados preliminares do benchmark (detector OpenCV, 384 pares da base LFW).}
+\label{tab:benchmark}
+\begin{tabular}{lrrrr}
+    \toprule
+    \textbf{Modelo} & \textbf{Acurácia} & \textbf{\textit{Recall}} & \textbf{Tempo/par (s)} & \textbf{Tamanho (MB)} \\
+    \midrule
+    ArcFace      & 92,71\% & 85,94\% & 0,736 & 130 \\
+    VGG-Face     & 88,02\% & 78,65\% & 2,379 & 580 \\
+    Dlib         & 84,90\% & 70,31\% & 1,247 & 22 \\
+    GhostFaceNet & 82,55\% & 65,10\% & 0,664 & 16 \\
+    SFace        & 81,51\% & 63,02\% & 0,089 & 5 \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+A escolha preliminar é o \textbf{ArcFace}, de maior acurácia e único acima da
+meta de 90\%, e o \textbf{SFace}, mais rápido e menor. A precisão de todos os
+modelos ficou próxima de 100\%, mas o \textit{recall} ficou baixo em vários
+deles, o que indica que o detector OpenCV (Haar Cascade) não encontra o rosto
+em parte das imagens. O benchmark está sendo repetido com o detector
+RetinaFace para verificar essa hipótese. Em seguida, a base de dados será
+ampliada para testar com mais rigor os dois modelos escolhidos.
+\pendente{atualizar a tabela e a escolha com os resultados do RetinaFace}
+
+\textbf{Atividade 1.3 -- Projeto arquitetural e análise de trade-offs.} Nesta
+atividade, será definida a arquitetura de hardware e software, com modelagem do
+banco de dados e diagramas UML (casos de uso, componentes, sequência do fluxo de
+embarque e implantação). Também será feita uma análise de trade-off entre
+computação de borda com Raspberry Pi e microcontrolador ESP32, considerando
+custo, capacidade de processamento e a possibilidade de rodar os modelos
+escolhidos dentro do limite de 2~s. A tendência atual é usar Raspberry Pi~5
+com o acelerador AI HAT (Hailo-10), já que o ESP32 não tem memória nem
+capacidade de processamento para rodar com folga os modelos de reconhecimento
+avaliados. Também serão especificados a câmera, o microfone direcional e o
+banco de dados (PostgreSQL ou Firebase). Por fim, será estudado como emular o
+ambiente do Hailo-10 no computador, para antecipar os testes de desempenho.
+
+\textbf{Atividade 1.4 -- Avaliação de impactos.} Serão analisados os impactos
+socioeconômicos (segurança física dos estudantes, transparência e otimização
+dos recursos públicos), legais (tratamento de dados biométricos de menores de
+idade segundo a LGPD, base legal, consentimento e prazos de retenção) e
+ambientais (consumo de energia e descarte do hardware) da tecnologia proposta.
+
+\textbf{Atividades 1.5 e 1.6 -- Monografia e seminário.} Redação do texto inicial
+da monografia (Introdução, Revisão Bibliográfica, Metodologia, Avaliação de
+Impactos e Cronograma do TCC~II), finalização do texto e preparação da
+apresentação no Seminário de TCC~I.
+
+\textbf{Ferramentas.} Python com OpenCV e TensorFlow Lite (pré-processamento e
+inferência no dispositivo), biblioteca DeepFace (avaliação comparativa dos
+modelos), MQTT (comunicação com o backend), PostgreSQL ou Firebase
+(armazenamento) e LaTeX/Overleaf (documentação). Python e OpenCV foram
+escolhidos pela maturidade em visão computacional e pelo suporte a hardware
+embarcado. O TensorFlow Lite foi escolhido por ser otimizado para inferência
+em dispositivos com poucos recursos. O MQTT, pelos motivos discutidos na
+revisão bibliográfica.
+
+\subsection{Atividades do TCC II}
+
+\begin{enumerate}
+    \item \textbf{Implementação do software embarcado:} pipeline de captura,
+          detecção, reconhecimento facial e de voz, retorno local por LED e
+          bipe, e fila local de eventos.
+    \item \textbf{Integração:} comunicação MQTT/API com o backend e o TRANSCOLAR
+          RURAL, com sincronização offline sem perda nem duplicação, e módulo
+          de cadastro e relatórios.
+    \item \textbf{Simulação em ambiente controlado:} testes de acurácia e de
+          tempo de resposta com o hardware definitivo, simulando as condições
+          do ônibus (iluminação, movimento, perda de conexão).
+    \item \textbf{Teste piloto:} instalação em um ônibus escolar rural real,
+          com cerca de 20 alunos.
+    \item \textbf{Validação e redação:} comparação das métricas obtidas com as
+          metas (acurácia acima de 90\%, no máximo 2~s por aluno), redação da
+          monografia de TCC~II e defesa.
+\end{enumerate}
+
+\subsection{Cronograma}
+
+\begin{table}[H]
+\centering
+\caption{Cronograma do ciclo completo do TCC.}
+\label{tab:cronograma}
+\begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Data limite} & \textbf{Etapa} \\
+    \midrule
+    \multicolumn{2}{l}{\textit{TCC I}} \\
+    08/2026     & 1.1 -- Levantamento de requisitos funcionais e não funcionais \\
+    30/09/2026  & 1.2 -- Seleção de 10 algoritmos, implementação do benchmark e obtenção da base de dados de teste \\
+    11/10/2026  & Entrega deste documento de Visão Geral \\
+    31/10/2026  & 1.2 -- Benchmark com os dados iniciais, escolha dos 2 melhores algoritmos e ampliação da base de dados \\
+    31/10/2026  & 1.3 -- Projeto arquitetural, modelagem de banco de dados e diagramas UML \\
+    31/10/2026  & 1.4 -- Análise de impactos socioeconômicos, ambientais e de privacidade \\
+    13/11/2026  & 1.5 -- Entrega do texto inicial da monografia \\
+    16 a 19/11/2026 & 1.6 -- Seminários de TCC I \\
+    30/11/2026  & 1.3 -- Estudo da emulação do Raspberry Pi AI HAT (Hailo-10) no computador \\
+    \midrule
+    \multicolumn{2}{l}{\textit{TCC II}} \\
+    \pendente{mês} & 2.1 -- Implementação do software embarcado \\
+    \pendente{mês} & 2.2 -- Integração MQTT/API com o TRANSCOLAR RURAL \\
+    \pendente{mês} & 2.3 -- Simulação em ambiente controlado \\
+    \pendente{mês} & 2.4 -- Teste piloto em ônibus escolar rural \\
+    \pendente{mês} & 2.5 -- Validação de métricas, monografia de TCC II e defesa \\
+    \bottomrule
+\end{tabularx}
+\end{table}
+
+% ============================================================================
+% 4. REFERÊNCIAS
+% ============================================================================
+\bibliography{referencias}
+
+\end{document}
