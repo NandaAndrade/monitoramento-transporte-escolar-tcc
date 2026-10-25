@@ -36,3 +36,6 @@ config/dispositivo.toml
 
 # Rascunhos automáticos do draw.io
 *.dtmp
+
+# PDFs dos artigos de referência: protegidos por direitos autorais e o repositório é público
+docs/Referencias/
