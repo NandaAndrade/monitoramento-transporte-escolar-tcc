@@ -33,3 +33,6 @@ config/dispositivo.toml
 
 # Trava de execucao do Claude Code
 .claude/scheduled_tasks.lock
+
+# Rascunhos automáticos do draw.io
+*.dtmp

@@ -36,23 +36,26 @@
 
 ### 1.3 Artigos originais dos modelos testados no benchmark
 
-A banca espera que cada modelo testado seja citado pelo seu artigo original. Hoje nenhum deles está no `referencias.bib`.
+A banca espera que cada modelo testado seja citado pelo seu artigo original.
 
-| Modelo | Referência original |
-|---|---|
-| ArcFace | DENG, J. *et al.* ArcFace: Additive Angular Margin Loss for Deep Face Recognition. *CVPR*, 2019. ⚠️ |
-| SFace | ZHONG, Y. *et al.* SFace: Sigmoid-Constrained Hypersphere Loss for Robust Face Recognition. *IEEE Transactions on Image Processing*, v. 30, 2021. ⚠️ |
-| GhostFaceNet | ALANSARI, M. *et al.* GhostFaceNets: Lightweight Face Recognition Model From Cheap Operations. *IEEE Access*, v. 11, p. 35429–35446, 2023. DOI 10.1109/ACCESS.2023.3266068. ✅ |
-| FaceNet / Facenet512 | SCHROFF, F.; KALENICHENKO, D.; PHILBIN, J. FaceNet: A Unified Embedding for Face Recognition and Clustering. *CVPR*, 2015. ✅ (está nas referências do ELANet) |
-| VGG-Face | PARKHI, O. M.; VEDALDI, A.; ZISSERMAN, A. Deep Face Recognition. *BMVC*, 2015. ⚠️ |
-| DeepFace | TAIGMAN, Y. *et al.* DeepFace: Closing the Gap to Human-Level Performance in Face Verification. *CVPR*, 2014. ⚠️ |
-| DeepID | SUN, Y.; WANG, X.; TANG, X. Deep Learning Face Representation from Predicting 10,000 Classes. *CVPR*, 2014. ⚠️ |
-| OpenFace | AMOS, B.; LUDWICZUK, B.; SATYANARAYANAN, M. OpenFace: A general-purpose face recognition library with mobile applications. Relatório técnico CMU-CS-16-118, 2016. ⚠️ |
-| Dlib | KING, D. E. Dlib-ml: A Machine Learning Toolkit. *Journal of Machine Learning Research*, v. 10, 2009. ⚠️ |
-| YuNet (detector) | WU, W.; PENG, H.; YU, S. YuNet: A Tiny Millisecond-level Face Detector. *Machine Intelligence Research*, v. 20, p. 656–665, 2023. DOI 10.1007/s11633-023-1423-y. ✅ |
-| RetinaFace (detector) | DENG, J. *et al.* RetinaFace: Single-Shot Multi-Level Face Localisation in the Wild. *CVPR*, 2020. ⚠️ |
-| LFW (base) | HUANG, G. B. *et al.* Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments. Relatório técnico 07-49, UMass Amherst, 2007. ⚠️ |
-| DeepFace (biblioteca) | SERENGIL, S. I.; ÖZPINAR, A. LightFace: A Hybrid Deep Face Recognition Framework. *ASYU*, 2020. ⚠️ Cite a biblioteca que gerou os números do benchmark. |
+> **Atualização (2026-10-22):** todos os modelos e detectores do benchmark já têm o artigo original em `docs/Referencias`, entrada no `referencias.bib` e citação na Atividade 1.2 da Visão Geral. Os dados de cada entrada foram conferidos no PDF; a coluna "Pendência" diz o que ainda falta confirmar na fonte publicada.
+
+| Modelo | Chave no `.bib` | Pendência |
+|---|---|---|
+| ArcFace | `deng2019arcface` | Nenhuma: p. 4685–4694 no IEEE Xplore (a versão aberta da CVF usa 4690–4699) |
+| SFace | `zhong2021sface` | Nenhuma (v. 30, p. 2587–2598 no PDF) |
+| GhostFaceNet | `alansari2023ghostfacenets` | Nenhuma (v. 11, p. 35429–35446 no PDF) |
+| FaceNet / Facenet512 | `schroff2015facenet` | Nenhuma: p. 815–823 no IEEE Xplore. O Facenet512 não tem artigo próprio |
+| VGG-Face | `parkhi2015vggface` | Nenhuma: p. 41.1–41.12 no arquivo da BMVA |
+| DeepFace | `taigman2014deepface` | Nenhuma: p. 1701–1708 no IEEE Xplore |
+| DeepID | `sun2014deepid` | Nenhuma: p. 1891–1898 no IEEE Xplore |
+| OpenFace | `amos2016openface` | Nenhuma (relatório técnico CMU-CS-16-118, jun. 2016). Não confundir com o OpenFace de análise de expressões (Baltrušaitis *et al.*) |
+| Dlib | `king2009dlib` | Nenhuma (JMLR v. 10, p. 1755–1758). O artigo descreve a biblioteca, não a rede de reconhecimento facial usada pelo DeepFace |
+| Haar Cascade (detector OpenCV) | `viola2001haar` | Nenhuma: v. 1, p. I-511–I-518 (o IEEE Xplore registra só "I"; páginas da referência da MERL) |
+| YuNet (detector) | `wu2023yunet` | Nenhuma (v. 20, n. 5, p. 656–665 no PDF) |
+| RetinaFace (detector) | `deng2020retinaface` | Nenhuma: p. 5202–5211 no IEEE Xplore (a versão aberta da CVF usa 5203–5212) |
+| LFW (base) | `huang2007lfw` | Número 07-49 confirmado nas referências do DeepID, do VGG-Face e do GhostFaceNets |
+| DeepFace (biblioteca) | `serengil2020lightface` | Nenhuma: p. 1–5 no IEEE Xplore (o `.bib` tinha 23–27, que estava errado) |
 
 ### 1.4 Benchmarks comparáveis ao seu
 
