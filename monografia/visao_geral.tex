@@ -5,6 +5,7 @@
 % Aluna: Fernanda Andrade Bicalho da Cruz
 % Orientador: Janier Arias García — Coorientador: Frederico Gualberto Ferreira Coelho
 % Entrega: 18/10/2026 (adiada de 11/10/2026) (Atividades 1.1 / 1.2 do TCC I)
+% Versão 01.00 finalizada em 18/10/2026.
 %
 % Estrutura segue o modelo oficial do curso:
 %   docs/modelos/modelo_visao_geral_tcc.doc
@@ -16,8 +17,10 @@
 % juntos para um projeto no Overleaf (mesmo procedimento de monografia_tcc1.tex).
 %
 % Antes de entregar:
-%   - remover todas as marcações \pendente{...} (aparecem em vermelho no PDF);
-%   - conferir as referências marcadas com "% CONFERIR" em referencias.bib.
+%   - conferir as referências marcadas com "% CONFERIR" em referencias.bib;
+%   - os parágrafos de voz e de trabalhos correlatos estão sem \cite: as
+%     referências candidatas estão nos comentários "% CITAR:" logo abaixo deles
+%     (ver docs/lacunas_revisao_bibliografica.md) e entram depois de lidas.
 % ============================================================================
 
 \documentclass[
@@ -54,7 +57,7 @@
 \newcommand{\nomeprojeto}{Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo}
 \newcommand{\nomealuna}{Fernanda Andrade Bicalho da Cruz}
 \newcommand{\versaodoc}{01.00}
-\newcommand{\datadoc}{5 de outubro de 2026}
+\newcommand{\datadoc}{18 de outubro de 2026}
 
 \titulo{Visão Geral do Projeto -- \nomeprojeto}
 \autor{\nomealuna}
@@ -101,17 +104,6 @@
     \end{minipage}
 \end{flushright}
 
-\vspace{2cm}
-\begin{flushright}
-    \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Versão:} & \versaodoc \\
-        \hline
-        \textbf{Data:}   & \datadoc \\
-        \hline
-    \end{tabular}
-\end{flushright}
-
 \vfill
 \begin{center}
     {\large Aluna: \nomealuna}\\[0.2cm]
@@ -129,11 +121,12 @@
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{|l|l|l|X|}
+\small
+\begin{tabularx}{\textwidth}{|c|c|p{4.2cm}|X|}
     \hline
-    \textbf{Versão (XX.YY)} & \textbf{Data (DD/MMM/AAAA)} & \textbf{Autor} & \textbf{Descrição} \\
+    \textbf{Versão} & \textbf{Data} & \textbf{Autor} & \textbf{Descrição} \\
     \hline
-    01.00 & 05/out/2026 & \nomealuna & Versão inicial para a entrega de 18/10/2026. \\
+    01.00 & 12/out/2026 & \nomealuna & Versão inicial, entregue em 18/10/2026. \\
     \hline
      & & & \\
     \hline
@@ -179,15 +172,15 @@ dados confiáveis sobre a operação das rotas.
 \textbf{Importância.} A falta de um registro confiável tem consequências em três
 frentes. Na segurança dos estudantes, não é possível afirmar com certeza se um
 aluno embarcou, se desembarcou no ponto correto ou se ficou para trás. Na
-transparência da gestão pública, o serviço -- custeado com recursos públicos
--- não tem uma forma auditável de comprovar que foi prestado. Na eficiência
+transparência da gestão pública, os dados são difíceis de serem coletados e
+auditados. Na eficiência
 operacional, a falta de dados impede que os gestores identifiquem rotas
 subutilizadas, atrasos recorrentes ou o custo real por aluno transportado.
 
 \textbf{Benefícios esperados.} O trabalho propõe um dispositivo de Internet das
 Coisas (IoT) embarcado no ônibus que identifica automaticamente cada aluno no
 embarque e no desembarque, por reconhecimento facial e de voz, sem exigir
-nenhuma ação do aluno ou do motorista. Os eventos de presença são enviados ao
+nenhuma ação do motorista e com o mínimo de ação do aluno. Os eventos de presença são enviados ao
 sistema TRANSCOLAR RURAL, já utilizado na gestão do transporte escolar. Com
 isso, espera-se: (i) maior segurança física dos estudantes, com alertas
 imediatos de falha de reconhecimento ou embarque irregular; (ii) registros
@@ -219,8 +212,7 @@ Os \textbf{objetivos específicos} são:
 \subsection{Local de realização}
 
 O trabalho é realizado no Departamento de Engenharia Eletrônica (DELT) da
-Escola de Engenharia da Universidade Federal de Minas Gerais, departamento ao
-qual pertencem o orientador e o coorientador. O DELT atua no ensino e na
+Escola de Engenharia da Universidade Federal de Minas Gerais. O DELT atua no ensino e na
 pesquisa em eletrônica, sistemas embarcados, processamento de sinais e
 inteligência computacional, áreas em que este projeto se insere: ele combina
 hardware embarcado, processamento de imagem e áudio e aprendizado de máquina
@@ -230,12 +222,13 @@ aplicado a um problema de gestão pública.
 
 \begin{itemize}
     \item A Seção~\ref{sec:visao-geral} apresenta uma visão geral do trabalho,
-          caracterizando o seu escopo e fazendo uma breve revisão bibliográfica
-          sobre o assunto, de modo a situar o trabalho proposto em relação a
-          outros apresentados na literatura;
-    \item a Seção~\ref{sec:metodologia} descreve a metodologia a ser empregada
-          no trabalho e o cronograma do ciclo completo (TCC~I e TCC~II);
-    \item a Seção \textit{Referências} apresenta as referências bibliográficas utilizadas.
+          caracterizando o seu escopo e efetuando uma breve revisão bibliográfica
+          sobre o assunto, permitindo situar claramente o trabalho proposto em
+          relação a outros apresentados na literatura;
+    \item A Seção~\ref{sec:metodologia} descreve a metodologia a ser empregada
+          no trabalho a ser desenvolvido;
+    \item A seção \textit{Referências} apresenta as referências bibliográficas
+          utilizadas.
 \end{itemize}
 
 % ============================================================================
@@ -250,7 +243,7 @@ Quando o aluno embarca ou desembarca, o dispositivo detecta o rosto, compara-o
 com as referências biométricas cadastradas e, opcionalmente, usa a voz como
 reforço. Todo o reconhecimento é feito no próprio dispositivo (computação de
 borda), sem depender de processamento em nuvem. O resultado é indicado na
-hora ao motorista ou monitor por um LED e um sinal sonoro, e gera um evento de
+hora ao motorista por um LED e um sinal sonoro, e gera um evento de
 presença (aluno, ônibus, rota, horário e tipo de evento). A imagem e o áudio
 capturados são descartados.
 
@@ -276,8 +269,7 @@ em um piloto com um ônibus, um sistema que contempla:
 \begin{itemize}
     \item reconhecimento facial no embarque e no desembarque, com
           reconhecimento de voz como reforço;
-    \item retorno local ao motorista ou monitor por LED e sinal sonoro, sem tela
-          nem login;
+    \item retorno local ao motorista por LED e sinal sonoro, sem tela nem login;
     \item registro de eventos de presença com funcionamento offline e
           sincronização posterior, sem perda nem duplicação;
     \item integração com o TRANSCOLAR RURAL via MQTT/API;
@@ -289,8 +281,7 @@ em um piloto com um ônibus, um sistema que contempla:
 As principais metas quantitativas definidas no levantamento de requisitos são:
 acurácia de reconhecimento superior a 90\%, tempo de no máximo 2~segundos por
 aluno entre a detecção e o retorno local, e capacidade para cerca de 20 alunos
-por ônibus no piloto. Os requisitos funcionais e não funcionais completos estão
-no documento de requisitos do projeto.
+por ônibus no piloto.
 
 \textbf{O que não se pretende fazer.} Não fazem parte do escopo: interfaces
 (aplicativo, tela ou login) para motoristas, monitores ou responsáveis; a coleta
@@ -302,8 +293,12 @@ utiliza apenas bases públicas de adultos.
 \textbf{Inserção em um projeto maior.} O trabalho complementa o TRANSCOLAR
 RURAL, sistema já utilizado na gestão do transporte escolar rural. O dispositivo
 proposto funciona como uma nova fonte automática de dados de presença para esse
-sistema, que hoje depende de registro manual.
-\pendente{a especificação técnica (API/protocolo) do TRANSCOLAR RURAL foi solicitada ao orientador; detalhar aqui quando disponível}
+sistema, que hoje depende de registro manual. Caso a interface com esse
+sistema não esteja disponível para integração com o projeto em desenvolvimento
+(esse ponto ainda será definido), a integração será validada contra um serviço
+simulado que segue o mesmo formato de mensagem; como o envio fica isolado em um
+único componente do software embarcado, a troca pelo serviço real não altera o
+restante do sistema.
 
 \textbf{Situação atual e situação a ser alcançada.} Atualmente, o controle de
 presença nos ônibus é manual, sem registro auditável e sem dados operacionais
@@ -311,71 +306,114 @@ consolidados. Ao final do trabalho, espera-se um protótipo validado em um
 ônibus real que registre automaticamente o embarque e o desembarque de cada
 aluno, alerte em caso de falha ou embarque irregular, funcione mesmo sem sinal
 de rede e entregue esses dados ao TRANSCOLAR RURAL. Tudo isso respeitando a
-Lei Geral de Proteção de Dados Pessoais \cite{brasil2018lgpd}, por se tratar
+Lei Geral de Proteção de Dados Pessoais (LGPD) \cite{brasil2018lgpd}, por se
+tratar
 de dados biométricos de menores de idade.
 
 \subsection{Revisão bibliográfica}
 
-\textbf{Métodos clássicos de reconhecimento facial.} Antes do aprendizado
-profundo, o reconhecimento facial era feito com métodos estatísticos e
-descritores de textura. O Eigenfaces \cite{turk1991eigenfaces} representa cada
-rosto como uma combinação de componentes principais (PCA). O Fisherfaces
-\cite{belhumeur1997eigenfaces} usa análise discriminante linear para maximizar
-a separação entre indivíduos. O LBPH \cite{ahonen2004face} descreve o rosto por
-histogramas de padrões binários locais. Esses métodos têm custo computacional
-baixo, mas são muito sensíveis a variações de iluminação, ângulo e expressão --
-justamente as condições esperadas dentro de um ônibus em movimento. Por isso,
-entram neste trabalho apenas como marco histórico.
+Os primeiros sistemas automáticos de reconhecimento facial tratavam a imagem
+inteira como um vetor de pixels. No Eigenfaces, \citeonline{turk1991eigenfaces}
+usam análise de componentes principais (PCA) para descrever cada rosto por
+poucos coeficientes, e o próprio artigo mostra o limite da ideia: o acerto
+ficou perto de 96\% quando só a iluminação variava, mas caiu para 64\% quando
+variava o tamanho do rosto na imagem. O Fisherfaces
+\cite{belhumeur1997eigenfaces} troca a PCA pela análise discriminante linear,
+que usa os rótulos do treino para separar as pessoas, e não as condições de
+luz. Já o LBPH \cite{ahonen2004face} descreve o rosto pela textura local de
+cada região, com histogramas de padrões binários. São métodos baratos, que
+rodariam com folga em qualquer placa embarcada, mas a variação de luz e de
+ângulo que os prejudica é exatamente o que se espera na porta de um ônibus.
+Por isso aparecem aqui só como ponto de partida histórico.
 
-\textbf{Reconhecimento facial com aprendizado profundo.} As abordagens atuais
-usam redes neurais profundas para mapear cada rosto em um vetor de
-características (\textit{embedding}), de forma que rostos da mesma pessoa
-fiquem próximos e rostos de pessoas diferentes fiquem distantes. O FaceNet
-\cite{schroff2015facenet} introduziu o treinamento por \textit{triplet loss}
-para aprender esse espaço diretamente. O ArcFace \cite{deng2019arcface} propôs
-uma margem angular aditiva na função de perda, o que torna os
-\textit{embeddings} mais discriminativos e levou a resultados de referência em
-bases públicas. O SFace \cite{zhong2021sface} usa uma perda com restrição
-sigmoide na hiperesfera, pensada para ser mais robusta a imagens de baixa
-qualidade, e tem um modelo muito leve, adequado a hardware embarcado.
+A mudança veio com as redes profundas treinadas para produzir um vetor de
+características (\textit{embedding}) em que a distância entre dois vetores já
+mede a semelhança entre dois rostos. O FaceNet \cite{schroff2015facenet}
+aprende esse espaço com a \textit{triplet loss}, que compara trios de imagens
+(duas da mesma pessoa e uma de outra), e chegou a 99,63\% de acurácia na LFW.
+Para este projeto, a consequência prática é que cadastrar um aluno novo exige
+só guardar o \textit{embedding} da sua foto, sem treinar a rede de novo. Os
+trabalhos seguintes passaram a medir a semelhança pelo ângulo entre os
+vetores. O ArcFace \cite{deng2019arcface} soma uma margem fixa ao ângulo entre
+o \textit{embedding} e o centro da classe correta e chegou a 99,83\% na LFW. O
+SFace \cite{zhong2021sface} suaviza essa otimização com curvas sigmoides, para
+que fotos ruins e rótulos errados da base de treino não dominem o
+aprendizado. No benchmark deste trabalho (Tabela~\ref{tab:benchmark}), o
+ArcFace também foi o modelo mais preciso, enquanto o SFace, com apenas 5~MB,
+foi de longe o mais rápido.
 
-\textbf{Detecção facial.} O reconhecimento depende de uma etapa anterior, que
-localiza e alinha o rosto na imagem. O RetinaFace \cite{deng2020retinaface} é
-um detector de estágio único com foco em precisão, robusto a rostos pequenos,
-parcialmente cobertos ou em ângulos difíceis. O YuNet \cite{wu2023yunet} tem
-foco em eficiência: é um detector de poucos kilobytes, integrado nativamente
-ao OpenCV e pensado para execução em tempo real em dispositivos de borda. A
-escolha entre os dois é uma troca entre robustez e custo computacional, que
-este trabalho avalia empiricamente.
+Antes de qualquer comparação, o rosto precisa ser encontrado e alinhado, e
+essa etapa acabou pesando tanto quanto o modelo. O RetinaFace
+\cite{deng2020retinaface} prevê, numa só passada da rede, a caixa do rosto e
+cinco pontos de referência, e lida bem com rostos pequenos. Com
+ele, a acurácia do ArcFace no benchmark subiu de 92,97\% para 96,61\%, ao custo
+de cerca de 0,6~s por imagem na CPU. O YuNet \cite{wu2023yunet} vai no sentido
+oposto: tem cerca de 76 mil parâmetros, código aberto e roda em poucos
+milissegundos na CPU, com precisão menor que a do RetinaFace nos rostos mais
+difíceis. Se essa perda é aceitável dentro do ônibus é uma das perguntas que
+a próxima rodada do benchmark deve responder.
 
-\textbf{Bases de dados e ferramentas de avaliação.} Para comparar os algoritmos
-de forma justa, este trabalho usa a biblioteca DeepFace
-\cite{serengil2020lightface}, que reúne dez modelos de reconhecimento atrás de
-uma mesma interface e do mesmo pipeline de detecção e alinhamento. Os testes
-usam bases públicas de adultos que consentiram com o uso em pesquisa: a
-\textit{Labeled Faces in the Wild} (LFW) \cite{huang2007lfw}, com fotos em
-condições não controladas, e a base AT\&T/Olivetti \cite{samaria1994att}.
+Para comparar os modelos em condições iguais, foi usada a biblioteca DeepFace
+\cite{serengil2020lightface}, que aplica o mesmo pipeline de detecção,
+alinhamento e verificação a todos eles. Os autores da biblioteca lembram que
+o alinhamento muda o resultado: no FaceNet, ele elevou a acurácia na
+LFW de 98,87\% para 99,63\%. Os testes usam apenas uma base pública de
+adultos, a \textit{Labeled Faces in the Wild} (LFW) \cite{huang2007lfw}, com
+13.233 fotos de 5.749 pessoas tiradas de notícias, em condições não
+controladas.
 
-\textbf{Comunicação em IoT.} O MQTT \cite{oasis2019mqtt} é um protocolo de
-mensagens do tipo publicação/assinatura, leve e projetado para redes instáveis
-ou de baixa largura de banda. Seus níveis de qualidade de serviço permitem
-garantir a entrega das mensagens. Isso o torna adequado para enviar eventos de
-presença de um ônibus em área rural, onde a conexão móvel cai com frequência.
+Para levar os eventos ao servidor, o projeto usa o MQTT \cite{oasis2019mqtt},
+um protocolo leve de publicação e assinatura pensado para redes instáveis. No
+nível de qualidade de serviço 1, o \textit{broker} confirma o recebimento de
+cada mensagem, e é essa confirmação que permite ao dispositivo apagar um
+evento da fila local só depois de entregue. Numa rota rural, em que o sinal
+de celular cai com frequência, isso faz diferença.
 
-\textbf{Reconhecimento de voz.} O reconhecimento de locutor em ambiente ruidoso
--- motor, estrada e conversas dentro do ônibus -- será tratado como mecanismo
-complementar ao reconhecimento facial. No TCC~I, a voz é tratada apenas na
-revisão bibliográfica; a seleção e a avaliação do modelo de reconhecimento de
-locutor ficam para o TCC~II.
-\pendente{incluir referências de reconhecimento de locutor em ambientes ruidosos e TensorFlow Lite embarcado}
+A voz entra como reforço do rosto. No TCC~I ela fica restrita à revisão
+bibliográfica, e a escolha e a avaliação do modelo de reconhecimento de
+locutor ficam para o TCC~II. A lógica é a mesma do reconhecimento facial. No
+ECAPA-TDNN \cite{desplanques2020ecapa}, que superou os sistemas baseados em
+x-vector e em ResNet da época, uma rede extrai um \textit{embedding} de cada
+trecho de fala, e dois trechos são comparados pela distância de cosseno entre
+os vetores, como se faz com os rostos. A versão menor do modelo tem
+6,2 milhões de parâmetros e taxa de erro igual (EER) de 1,01\% no VoxCeleb1.
+Essa base \cite{nagrani2017voxceleb}, com mais de 100 mil falas de 1.251
+celebridades tiradas de vídeos do YouTube, tem para a voz o papel que a LFW
+tem para o rosto: as gravações vêm de ambientes reais, como entrevistas,
+estádios e tapetes vermelhos, com ruído e várias pessoas falando. O ruído de
+um ônibus, porém, é outro: o motor, a estrada e a conversa dos próprios
+alunos devem piorar a taxa de acerto. O ECAPA-TDNN já é treinado com ruído,
+fala de fundo e reverberação artificiais, mas isso não garante o desempenho
+dentro do ônibus, e o ruído vai pesar tanto na escolha do modelo quanto na do
+microfone direcional.
+% CITAR: versão leve para borda (Chen et al., APSIPA ASC 2023), para sustentar
+% que a voz caberia no mesmo hardware do rosto; a frase sobre modelos compactos
+% em borda e microcontroladores saiu até essa referência entrar.
+% Ver docs/lacunas_revisao_bibliografica.md, seção 1.2.
 
-\textbf{Posicionamento do trabalho.} Os trabalhos citados tratam cada componente
-isoladamente: detecção, reconhecimento ou comunicação. A contribuição deste
-trabalho é integrá-los em um sistema embarcado com restrições reais (hardware
-de baixo custo, conectividade intermitente, ambiente com vibração e iluminação
-variável, dados de menores de idade) e avaliar empiricamente quais algoritmos
-atendem a essas restrições.
-\pendente{citar trabalhos correlatos de controle de presença em transporte escolar (ex.: RFID, biometria, IoT) e comparar com a proposta}
+Há trabalhos anteriores com a mesma motivação. Em ônibus escolares,
+\citeonline{garg2021onibus} registram o embarque e o desembarque com cartões
+RFID e avisam os pais por SMS ou e-mail. Como o cartão exige uma ação do aluno
+e pode ser usado por outra pessoa, os autores acrescentam uma câmera ESP32-CAM
+com reconhecimento facial para confirmar quem embarca. Em sala de aula, o trabalho mais próximo deste é o de
+\citeonline{duarte2025classic}, que usa a mesma combinação de Raspberry Pi,
+DeepFace e ArcFace. Os números deles ajudam a dimensionar o problema: o
+reconhecimento levou cerca de 4,5~s no próprio Raspberry Pi~4 e caiu para
+cerca de 2~s quando foi transferido a um computador na rede local. O acerto
+foi de 85,7\% entre 14 voluntários, abaixo dos 90\% que o mesmo par de detector
+e modelo havia obtido com fotos.
+
+O que este trabalho acrescenta é juntar essas peças sob as restrições do
+transporte rural. O reconhecimento roda inteiro no dispositivo, sem depender
+de rede, ao contrário do CLASSIC, que precisa de um computador na mesma rede
+Wi-Fi para ser rápido. Quando o sinal cai, os eventos esperam numa fila local
+e são enviados depois, sem perda nem duplicação. Nenhuma imagem é guardada,
+enquanto o CLASSIC armazena todas as fotos capturadas, um ponto sensível pela
+LGPD quando os dados são de crianças. E os eventos alimentam um sistema
+público que já existe, o TRANSCOLAR RURAL.
+% Frases sem fonte na pasta foram retiradas em 22/10/2026 (Raspberry Pi em
+% ônibus e "menos de 1 s"). Candidatas para a monografia: ICCMC 2023, IEEE 2019
+% e Surantha e Sugijakko (2024); ver docs/lacunas_revisao_bibliografica.md, seção 1.1.
 
 % ============================================================================
 % 3. METODOLOGIA E CRONOGRAMA
@@ -392,47 +430,83 @@ requisitos com identificadores rastreáveis até os objetivos específicos. Entr
 as decisões já tomadas estão: não armazenar imagem nem áudio dos alunos; tempo
 máximo de 2~s por reconhecimento; retorno local por LED e bipe; retenção dos
 eventos no dispositivo apenas até a sincronização e, no servidor, pelo ano
-letivo mais um ano; e registro do consentimento dos responsáveis como
-pré-requisito para o cadastro biométrico.
+letivo mais um ano; registro do consentimento dos responsáveis como
+pré-requisito para o cadastro biométrico; e, entre os dois tipos de erro de
+reconhecimento, considerar mais grave registrar o aluno errado (falso positivo)
+do que deixar de registrar um aluno (falso negativo), já que este último ainda
+é sinalizado ao motorista pelo retorno local de falha.
 
 \textbf{Atividade 1.2 -- Revisão bibliográfica e avaliação empírica.} Além da
 pesquisa bibliográfica, foi feito um benchmark com os dez modelos de
-reconhecimento facial disponíveis na biblioteca DeepFace (VGG-Face, FaceNet,
-FaceNet512, OpenFace, DeepFace, DeepID, ArcFace, Dlib, SFace e GhostFaceNet).
+reconhecimento facial disponíveis na biblioteca DeepFace: VGG-Face
+\cite{parkhi2015vggface}, FaceNet e FaceNet512 \cite{schroff2015facenet},
+OpenFace \cite{amos2016openface}, DeepFace \cite{taigman2014deepface}, DeepID
+\cite{sun2014deepid}, ArcFace \cite{deng2019arcface}, Dlib \cite{king2009dlib},
+SFace \cite{zhong2021sface} e GhostFaceNet \cite{alansari2023ghostfacenets}.
+O FaceNet512 é uma versão de 512 dimensões treinada pela comunidade, sem artigo
+próprio; o modelo Dlib vem da biblioteca de mesmo nome.
 A ferramenta foi escolhida porque aplica o mesmo pipeline de detecção e
 alinhamento a todos os modelos, o que garante uma comparação justa. Cada
 modelo foi avaliado em 384 pares de imagens da base LFW (96 pessoas, com pares
 da mesma pessoa e de pessoas diferentes), medindo acurácia, precisão,
 \textit{recall}, F1, tempo médio por par e tamanho do modelo. Cada modelo roda
 em um processo separado, para que o tempo medido não seja distorcido pelos
-modelos carregados antes. A Tabela~\ref{tab:benchmark} mostra os melhores
-resultados obtidos com o detector OpenCV.
+modelos carregados antes. O benchmark foi rodado com dois detectores de rosto:
+o do OpenCV, baseado no Haar Cascade \cite{viola2001haar}, mais leve, e o
+RetinaFace \cite{deng2020retinaface}, mais preciso. Cada imagem
+é detectada e alinhada uma única vez, e os dez modelos são avaliados sobre os
+mesmos recortes, o que permite medir o tempo de detecção separado do tempo de
+reconhecimento. A Tabela~\ref{tab:benchmark} mostra os modelos mais bem
+colocados.
 
 \begin{table}[H]
 \centering
-\caption{Resultados preliminares do benchmark (detector OpenCV, 384 pares da base LFW).}
+\caption{Resultados preliminares do benchmark (384 pares da base LFW, limiar padrão do DeepFace). O tempo por par inclui a detecção das duas imagens, medida na CPU de um computador pessoal.}
 \label{tab:benchmark}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
     \toprule
-    \textbf{Modelo} & \textbf{Acurácia} & \textbf{\textit{Recall}} & \textbf{Tempo/par (s)} & \textbf{Tamanho (MB)} \\
+     & \multicolumn{2}{c}{\textbf{OpenCV}} & \multicolumn{2}{c}{\textbf{RetinaFace}} & \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+    \textbf{Modelo} & \textbf{Acurácia} & \textbf{Tempo (s)} & \textbf{Acurácia} & \textbf{Tempo (s)} & \textbf{MB} \\
     \midrule
-    ArcFace      & 92,71\% & 85,94\% & 0,736 & 130 \\
-    VGG-Face     & 88,02\% & 78,65\% & 2,379 & 580 \\
-    Dlib         & 84,90\% & 70,31\% & 1,247 & 22 \\
-    GhostFaceNet & 82,55\% & 65,10\% & 0,664 & 16 \\
-    SFace        & 81,51\% & 63,02\% & 0,089 & 5 \\
+    ArcFace      & 92,97\% & 0,56 & 96,61\% & 1,80 & 130 \\
+    VGG-Face     & 88,02\% & 1,06 & 95,57\% & 2,34 & 580 \\
+    Dlib         & 84,64\% & 1,08 & 84,90\% & 2,30 & 22 \\
+    Facenet      & 76,30\% & 0,64 & 82,55\% & 1,85 & 90 \\
+    GhostFaceNet & 82,03\% & 0,51 & 81,77\% & 1,71 & 16 \\
+    SFace        & 81,25\% & 0,09 & 79,69\% & 1,28 & 5 \\
     \bottomrule
 \end{tabular}
 \end{table}
 
-A escolha preliminar é o \textbf{ArcFace}, de maior acurácia e único acima da
-meta de 90\%, e o \textbf{SFace}, mais rápido e menor. A precisão de todos os
-modelos ficou próxima de 100\%, mas o \textit{recall} ficou baixo em vários
-deles, o que indica que o detector OpenCV (Haar Cascade) não encontra o rosto
-em parte das imagens. O benchmark está sendo repetido com o detector
-RetinaFace para verificar essa hipótese. Em seguida, a base de dados será
-ampliada para testar com mais rigor os dois modelos escolhidos.
-\pendente{atualizar a tabela e a escolha com os resultados do RetinaFace}
+O \textbf{ArcFace} é a escolha mais clara: tem a maior acurácia com os dois
+detectores e chega a 96,61\% com o RetinaFace, acima da meta de 90\%, com
+precisão de 99,45\%. O segundo modelo ainda está em aberto. O VGG-Face também
+passa da meta com o RetinaFace (95,57\%), mas é o maior modelo avaliado
+(580~MB). O SFace é de longe o mais leve e rápido (5~MB e 0,04~s de
+reconhecimento por par), mas fica abaixo de 82\% com os dois detectores.
+
+Os resultados também mostram três pontos que orientam os próximos passos.
+Primeiro, o detector pesa tanto quanto o modelo de reconhecimento: o
+RetinaFace leva cerca de 0,6~s por imagem na CPU, e com ele o ArcFace fica em
+1,80~s por par, perto do limite de 2~s, o que torna a escolha do detector
+parte da decisão. Segundo, SFace, GhostFaceNet e Dlib têm precisão próxima de
+100\% e \textit{recall} baixo com qualquer detector, o que aponta para o
+limiar padrão do DeepFace, conservador demais para esses modelos, e não para
+uma limitação deles. Como o critério do projeto prioriza a precisão, a
+comparação final vai fixar uma meta de precisão, calibrar o limiar de cada
+modelo em um conjunto separado e comparar o \textit{recall} obtido nesse
+ponto. Terceiro, com 384 pares a margem de erro é de cerca de 2~pontos
+percentuais, de modo que ArcFace e VGG-Face ainda não se distinguem
+estatisticamente. Até o fim de outubro, o benchmark será repetido com o
+detector YuNet, os limiares serão calibrados, os dois modelos serão escolhidos
+e a base de dados será ampliada para testá-los com mais rigor.
+
+Uma limitação deve ser registrada: o benchmark mede verificação 1:1 entre
+fotos de adultos, enquanto o sistema fará identificação entre cerca de 20
+crianças, com a iluminação e o ângulo da porta do ônibus. Os números servem
+para comparar os modelos entre si; o desempenho real só será conhecido nos
+testes do TCC~II.
 
 \textbf{Atividade 1.3 -- Projeto arquitetural e análise de trade-offs.} Nesta
 atividade, será definida a arquitetura de hardware e software, com modelagem do
@@ -446,6 +520,13 @@ capacidade de processamento para rodar com folga os modelos de reconhecimento
 avaliados. Também serão especificados a câmera, o microfone direcional e o
 banco de dados (PostgreSQL ou Firebase). Por fim, será estudado como emular o
 ambiente do Hailo-10 no computador, para antecipar os testes de desempenho.
+Os primeiros diagramas (contexto, casos de uso, componentes, implantação,
+sequência do embarque e da sincronização e modelo de dados) já estão esboçados.
+Para o software embarcado, foi adotada uma arquitetura de portas e adaptadores,
+em que a câmera, o modelo de reconhecimento e o meio de envio ficam atrás de
+interfaces e podem ser trocados sem alterar a regra de negócio, e uma fila
+local de eventos com identificador único por evento, que garante o envio sem
+perda nem duplicação quando a rede volta.
 
 \textbf{Atividade 1.4 -- Avaliação de impactos.} Serão analisados os impactos
 socioeconômicos (segurança física dos estudantes, transparência e otimização
@@ -458,14 +539,19 @@ da monografia (Introdução, Revisão Bibliográfica, Metodologia, Avaliação d
 Impactos e Cronograma do TCC~II), finalização do texto e preparação da
 apresentação no Seminário de TCC~I.
 
-\textbf{Ferramentas.} Python com OpenCV e TensorFlow Lite (pré-processamento e
-inferência no dispositivo), biblioteca DeepFace (avaliação comparativa dos
-modelos), MQTT (comunicação com o backend), PostgreSQL ou Firebase
-(armazenamento) e LaTeX/Overleaf (documentação). Python e OpenCV foram
+\textbf{Ferramentas.} Python com OpenCV e TensorFlow Lite no pré-processamento
+e inferência no dispositivo, biblioteca DeepFace na avaliação comparativa dos
+modelos, MQTT na comunicação com o backend, PostgreSQL ou Firebase para
+armazenamento e LaTeX/Overleaf para as documentações. Python e OpenCV foram
 escolhidos pela maturidade em visão computacional e pelo suporte a hardware
 embarcado. O TensorFlow Lite foi escolhido por ser otimizado para inferência
 em dispositivos com poucos recursos. O MQTT, pelos motivos discutidos na
-revisão bibliográfica.
+revisão bibliográfica. O Claude Code foi utilizado para estruturação da
+documentação, acompanhamento do cronograma, geração de relatórios de status,
+apoio no levantamento de questionamentos para os requisitos, apoio na revisão
+do conteúdo produzido, tradução de algumas documentações e apoio no
+entendimento, geração de resumos e indicação de fontes de pesquisa para serem
+estudadas.
 
 \subsection{Atividades do TCC II}
 
@@ -509,11 +595,11 @@ revisão bibliográfica.
     30/11/2026  & 1.3 -- Estudo da emulação do Raspberry Pi AI HAT (Hailo-10) no computador \\
     \midrule
     \multicolumn{2}{l}{\textit{TCC II}} \\
-    \pendente{mês} & 2.1 -- Implementação do software embarcado \\
-    \pendente{mês} & 2.2 -- Integração MQTT/API com o TRANSCOLAR RURAL \\
-    \pendente{mês} & 2.3 -- Simulação em ambiente controlado \\
-    \pendente{mês} & 2.4 -- Teste piloto em ônibus escolar rural \\
-    \pendente{mês} & 2.5 -- Validação de métricas, monografia de TCC II e defesa \\
+    03/2027     & 2.1 -- Implementação do software embarcado \\
+    04/2027     & 2.2 -- Integração MQTT/API com o TRANSCOLAR RURAL \\
+    05/2027     & 2.3 -- Simulação em ambiente controlado \\
+    06/2027     & 2.4 -- Teste piloto em ônibus escolar rural \\
+    07/2027     & 2.5 -- Validação de métricas, monografia de TCC II e defesa \\
     \bottomrule
 \end{tabularx}
 \end{table}
