@@ -52,6 +52,11 @@ USO (a partir da raiz do repositorio):
         --saida_csv pesquisa/resultados/benchmark_resultados_retinaface.csv \\
         --saida_png pesquisa/resultados/benchmark_resultados_retinaface.png
 
+    Com --detector_backend yunet, o limiar de confianca do YuNet cai para 0,5
+    (ver LIMIAR_CONFIANCA_YUNET). No Windows, ao redirecionar a saida para um
+    arquivo, defina PYTHONIOENCODING=utf-8: o aviso do DeepFace tem emoji e
+    derruba o script com UnicodeEncodeError na codificacao cp1252.
+
 ESTRUTURA ESPERADA DO DATASET (uma pasta por pessoa):
     pesquisa/dados/lfw/
         pessoa_01/
@@ -82,6 +87,7 @@ import itertools
 import json
 import logging
 import multiprocessing as mp
+import os
 import queue
 import random
 import time
@@ -153,6 +159,13 @@ INTERVALO_VERIFICACAO_S = 5.0
 
 # Arquivo, dentro da pasta do cache, com o tempo de deteccao de cada imagem.
 ARQUIVO_TEMPOS_DETECCAO = "tempos_deteccao.json"
+
+# Confianca minima do YuNet. O DeepFace usa 0,9, mas com align=True ele poe uma
+# borda preta de 50% em volta da imagem antes de detectar; nas fotos de 94x125
+# do LFW o rosto fica pequeno e o YuNet perde 10% deles (65 de 649). Com 0,5,
+# o valor usado no artigo do YuNet (Wu; Peng; Yu, 2023), nenhum se perde.
+LIMIAR_CONFIANCA_YUNET = 0.5
+VARIAVEL_LIMIAR_YUNET = "yunet_score_threshold"
 
 
 @dataclass(frozen=True)
@@ -337,6 +350,16 @@ def _desligar_ampliacao_retinaface() -> None:
         return detectar_original(*args, **{**kwargs, "allow_upscaling": False})
 
     RetinaFace.detect_faces = detectar_sem_ampliar
+
+
+def _ajustar_limiar_yunet() -> None:
+    """Baixa a confianca minima do YuNet, que o DeepFace so le de variavel de ambiente.
+
+    Os processos isolados de cada modelo herdam a variavel. Um valor ja definido
+    no ambiente e respeitado, para permitir repetir a rodada com outro limiar.
+    """
+    os.environ.setdefault(VARIAVEL_LIMIAR_YUNET, str(LIMIAR_CONFIANCA_YUNET))
+    logger.info("Limiar de confianca do YuNet: %s", os.environ[VARIAVEL_LIMIAR_YUNET])
 
 
 def preparar_cache_deteccao(
@@ -569,6 +592,8 @@ def main() -> None:
     )
 
     detector = args.detector_backend
+    if detector == "yunet":
+        _ajustar_limiar_yunet()
     tempo_deteccao = None
     if args.cache_deteccao is not None and detector != DETECTOR_SEM_DETECCAO:
         cache_dir = args.cache_deteccao or PASTA_CACHE_DETECCAO / detector

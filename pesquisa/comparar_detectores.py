@@ -1,7 +1,7 @@
 """
-Comparacao de detectores de rosto (OpenCV x RetinaFace) no benchmark - TCC
+Comparacao de detectores de rosto (OpenCV x RetinaFace x YuNet) no benchmark - TCC
 
-Junta as rodadas feitas com --cache_deteccao (mesma metodologia para os dois
+Junta as rodadas feitas com --cache_deteccao (mesma metodologia para todos os
 detectores: deteccao uma vez por imagem, mesmos 384 pares do LFW, tempo de
 deteccao medido a parte) e gera, em pesquisa/resultados/:
     - benchmark_comparacao_detectores.csv -> uma linha por modelo, com
@@ -44,7 +44,13 @@ DETECTORES = {
         "benchmark_resultados_retinaface.csv",
         "benchmark_resultados_retinaface_deepface.csv",
     ),
+    "yunet": (
+        "benchmark_resultados_yunet.csv",
+        "benchmark_resultados_yunet_deepface.csv",
+    ),
 }
+# Detector que define a ordem dos modelos na tabela e no grafico.
+DETECTOR_ORDENACAO = "retinaface"
 SAIDA_CSV = PASTA_RESULTADOS / "benchmark_comparacao_detectores.csv"
 SAIDA_PNG = PASTA_RESULTADOS / "benchmark_comparacao_detectores.png"
 
@@ -55,9 +61,12 @@ LIMITE_TEMPO_S = 2.0  # RNF-02
 # O verify detecta as duas imagens do par.
 IMAGENS_POR_PAR = 2
 
-COR = {"opencv": "#2a78d6", "retinaface": "#eb6834"}
-MARCADOR = {"opencv": "o", "retinaface": "s"}
-ROTULO = {"opencv": "OpenCV (Haar Cascade)", "retinaface": "RetinaFace"}
+COR = {"opencv": "#2a78d6", "retinaface": "#eb6834", "yunet": "#2e9e5b"}
+MARCADOR = {"opencv": "o", "retinaface": "s", "yunet": "D"}
+ROTULO = {"opencv": "OpenCV (Haar Cascade)", "retinaface": "RetinaFace", "yunet": "YuNet"}
+# Marcadores maiores por baixo e menores por cima: quando os valores
+# coincidem, todos continuam visiveis. (tamanho, zorder)
+CAMADA = {"retinaface": (110, 3), "yunet": (75, 4), "opencv": (40, 5)}
 COR_TEXTO, COR_TEXTO_SECUNDARIO, COR_GRADE = "#0b0b0b", "#52514e", "#e4e3df"
 MARCAS_TEMPO_S = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20]
 
@@ -101,7 +110,7 @@ def montar_comparacao() -> "pd.DataFrame":
             )
         )
     comparacao = pd.concat(partes, axis=1).reset_index()
-    return comparacao.sort_values("acuracia_retinaface", ascending=False)
+    return comparacao.sort_values(f"acuracia_{DETECTOR_ORDENACAO}", ascending=False)
 
 
 def _estilizar_eixo(ax, titulo_x: str) -> None:
@@ -118,7 +127,7 @@ def gerar_grafico(comparacao: "pd.DataFrame", caminho: Path) -> None:
     import matplotlib.pyplot as plt
     from matplotlib.ticker import FixedLocator, FuncFormatter
 
-    comparacao = comparacao.sort_values("acuracia_retinaface")
+    comparacao = comparacao.sort_values(f"acuracia_{DETECTOR_ORDENACAO}")
     y = range(len(comparacao))
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5.5), sharey=True, facecolor="white")
@@ -134,14 +143,14 @@ def gerar_grafico(comparacao: "pd.DataFrame", caminho: Path) -> None:
         ),
     ]
     for ax, campo, escala, titulo_x, referencia, rotulo_referencia in paineis:
-        a = comparacao[f"{campo}_opencv"] * escala
-        b = comparacao[f"{campo}_retinaface"] * escala
-        ax.hlines(y, a.clip(upper=b), a.clip(lower=b), color=COR_GRADE, linewidth=2, zorder=1)
-        # Quadrado maior por baixo e circulo menor por cima: quando os valores
-        # coincidem, os dois continuam visiveis.
-        for detector, valores, tamanho, z in (("opencv", a, 50, 4), ("retinaface", b, 110, 3)):
+        valores = comparacao[[f"{campo}_{d}" for d in DETECTORES]] * escala
+        ax.hlines(
+            y, valores.min(axis=1), valores.max(axis=1), color=COR_GRADE, linewidth=2, zorder=1
+        )
+        for detector in DETECTORES:
+            tamanho, z = CAMADA[detector]
             ax.scatter(
-                valores,
+                valores[f"{campo}_{detector}"],
                 y,
                 s=tamanho,
                 marker=MARCADOR[detector],
