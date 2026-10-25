@@ -85,12 +85,15 @@ Dois modelos exigem passos extras: o Dlib precisa ser compilado (CMake e compila
 
 ### Comparação de detectores
 
-O benchmark também foi rodado com o detector RetinaFace, usando `--cache_deteccao` (cada imagem é detectada uma vez só e os modelos rodam sobre os recortes). O `comparar_detectores.py` junta as duas rodadas em [`benchmark_comparacao_detectores.csv`](pesquisa/resultados/benchmark_comparacao_detectores.csv) e [`.png`](pesquisa/resultados/benchmark_comparacao_detectores.png):
+O benchmark também foi rodado com os detectores RetinaFace e YuNet, usando `--cache_deteccao` (cada imagem é detectada uma vez só e os modelos rodam sobre os recortes). Com o YuNet, o script baixa o limiar de confiança para 0,5: com o padrão do DeepFace (0,9), ele perdia 10% dos rostos nas fotos pequenas do LFW (seção 8 do [relatório do benchmark](docs/benchmark_reconhecimento_facial.md)). O `comparar_detectores.py` junta as três rodadas (OpenCV, RetinaFace e YuNet) em [`benchmark_comparacao_detectores.csv`](pesquisa/resultados/benchmark_comparacao_detectores.csv) e [`.png`](pesquisa/resultados/benchmark_comparacao_detectores.png):
 
 ```bash
 python pesquisa/benchmark_reconhecimento_facial.py --pares_por_pessoa 2 --detector_backend retinaface --cache_deteccao --saida_csv pesquisa/resultados/benchmark_resultados_retinaface.csv --saida_png pesquisa/resultados/benchmark_resultados_retinaface.png
+python pesquisa/benchmark_reconhecimento_facial.py --pares_por_pessoa 2 --detector_backend yunet --cache_deteccao --saida_csv pesquisa/resultados/benchmark_resultados_yunet.csv --saida_png pesquisa/resultados/benchmark_resultados_yunet.png
 python pesquisa/comparar_detectores.py
 ```
+
+No Windows, ao redirecionar a saída para um arquivo, defina `PYTHONIOENCODING=utf-8` antes: o aviso do DeepFace tem emoji e derruba o script com `UnicodeEncodeError`.
 
 ## Estrutura
 

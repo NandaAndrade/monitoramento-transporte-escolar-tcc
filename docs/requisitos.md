@@ -87,7 +87,7 @@ O transporte escolar rural carece de mecanismos automatizados de controle de pre
 | ID | Requisito |
 |---|---|
 | RNF-01 | O sistema deve suportar o reconhecimento de até **~20 alunos por ônibus**, no cenário do piloto de 1 ônibus (TCC2). *(suposição de dimensionamento — ver seção 5)* |
-| RNF-02 | O reconhecimento de um aluno — da detecção do rosto na câmera até o retorno local (RF-20) — deve ocorrer em **no máximo 2 segundos**, para não formar fila na porta do ônibus. No benchmark preliminar em PC, o tempo médio de comparação por par foi de 0,09 s (SFace) e 0,74 s (ArcFace); o valor deve ser revalidado no hardware embarcado escolhido na Atividade 1.3. |
+| RNF-02 | O reconhecimento de um aluno — da detecção do rosto na câmera até o retorno local (RF-20) — deve ocorrer em **no máximo 2 segundos**, para não formar fila na porta do ônibus. No benchmark preliminar em PC, o tempo médio de comparação por par foi de 0,09 s (SFace) e 0,74 s (ArcFace). Somando a detecção, o ArcFace leva 0,59 s por par com o detector YuNet e 1,80 s com o RetinaFace: a escolha do detector pesa tanto quanto a do modelo. O valor deve ser revalidado no hardware embarcado escolhido na Atividade 1.3. |
 | RNF-03 | A acurácia do reconhecimento de presença deve ser **superior a 90%**, conforme meta definida na proposta do projeto. Entre os dois tipos de erro, **registrar o aluno errado (falso positivo) é o mais grave**: o limiar de decisão deve priorizar a precisão, mesmo à custa de recall. |
 
 ### 3.2 Confiabilidade e disponibilidade

@@ -78,7 +78,7 @@ Ambos são de **adultos que consentiram participar de pesquisa acadêmica públi
 Baixa um dataset público de rostos (LFW ou AT&T/Olivetti) via `scikit-learn` — sem precisar de link manual — e organiza as imagens na estrutura de pastas esperada pelo script de benchmark (`dataset/pessoa_XX/foto.jpg`). Código completo: [preparar_dataset.py](../pesquisa/preparar_dataset.py).
 
 
-### 5.2 `benchmark_face_recognition.py`
+### 5.2 `benchmark_reconhecimento_facial.py`
 
 Roda os 10 algoritmos (via `DeepFace`) sobre o dataset preparado, calcula acurácia/precisão/recall/F1 e tempo médio de inferência, e gera um CSV + gráfico comparativo.
 
@@ -94,7 +94,7 @@ pip install scikit-learn pillow deepface pandas matplotlib "opencv-python==4.10.
 python preparar_dataset.py --fonte lfw --min_fotos_por_pessoa 15 --saida ./dataset
 
 # 2) roda o benchmark (por padrao, isola cada modelo em um processo)
-python benchmark_face_recognition.py --dataset_dir ./dataset
+python benchmark_reconhecimento_facial.py --dataset_dir ./dataset
 ```
 
 > Fixe `opencv-python` em `4.10.0.84` — a versão mais recente do PyPI (5.0.0) não inclui os arquivos de cascata Haar e quebra o detector `opencv` silenciosamente (todos os pares dão erro sem mensagem clara). O `Dlib` e o modelo `DeepFace` (Facebook) exigem passos extras não cobertos neste fluxo básico — ver seção 3 de [benchmark_reconhecimento_facial.md](benchmark_reconhecimento_facial.md).
@@ -104,6 +104,6 @@ python benchmark_face_recognition.py --dataset_dir ./dataset
 ## 7. Próximos passos sugeridos
 
 - ~~Rodar o benchmark e interpretar os resultados junto com a orientação.~~ **Concluído** — ver [benchmark_reconhecimento_facial.md](benchmark_reconhecimento_facial.md): ArcFace (92,71%) e SFace (mais rápido, 0,089s/par) recomendados.
-- Testar a etapa de **detecção** separadamente (YuNet vs RetinaFace vs MTCNN), já que a acurácia final depende dos dois estágios (detecção + reconhecimento). **Parcialmente concluído** — RetinaFace × OpenCV comparados em 05/10/2026 (ver seção 7 de [benchmark_reconhecimento_facial.md](benchmark_reconhecimento_facial.md)): ArcFace sobe para 96,61% e VGG-Face para 95,57%, mas SFace não melhora. YuNet e MTCNN ainda pendentes.
+- Testar a etapa de **detecção** separadamente (YuNet vs RetinaFace vs MTCNN), já que a acurácia final depende dos dois estágios (detecção + reconhecimento). **Parcialmente concluído** — RetinaFace × OpenCV comparados em 05/10/2026 (ver seção 7 de [benchmark_reconhecimento_facial.md](benchmark_reconhecimento_facial.md)): ArcFace sobe para 96,61% e VGG-Face para 95,57%, mas SFace não melhora. YuNet testado em 25/10/2026 (seção 8): ArcFace chega a 95,57%, perto do RetinaFace, com detecção cerca de 80x mais rápida; SFace cai para 75,00%. MTCNN ainda pendente.
 - Escrever a seção de Revisão Bibliográfica (Atividade 1.2) da monografia com base nessa comparação, citando as fontes corretamente. **Em andamento** — [monografia_tcc1.tex](../monografia/monografia_tcc1.tex) já tem a subseção sobre Eigenfaces/Fisherfaces/LBPH (por que ficaram de fora do benchmark); a comparação empírica completa dos 10 modelos ainda não foi redigida em prosa acadêmica.
 - Se o LFW se mostrar pequeno demais, considerar VGGFace2 ou "Pins Face Recognition" (Kaggle) para mais volume/diversidade. **Ainda pendente** — não avaliado nesta rodada.

@@ -2,7 +2,7 @@
 
 **Projeto:** Sistema IoT para Monitoramento da Presença de Estudantes em Transporte Escolar Rural por Reconhecimento de Voz e Vídeo
 **Aluna:** Fernanda Andrade Bicalho da Cruz
-**Última atualização:** 2026-10-11
+**Última atualização:** 2026-10-25
 
 > Documento vivo — atualizado ao longo das conversas de estudo, para servir de base à seção de Revisão Bibliográfica do TCC I (Atividade 1.2) e às decisões de arquitetura (Atividade 1.3).
 
@@ -91,7 +91,7 @@ Os 10 algoritmos de reconhecimento (segunda etapa do pipeline, depois da detecç
 
 **Ranking por acurácia:** ArcFace (92,71%) > VGG-Face (88,02%) > Dlib (84,90%) > GhostFaceNet (82,55%) > SFace (81,51%) > Facenet (76,04%) > Facenet512 (72,66%) > DeepFace/Facebook (60,94%) > DeepID (51,56%) > OpenFace (50,78%).
 
-**Recomendação para o hardware do projeto:** **ArcFace** (melhor acurácia, tempo de inferência aceitável) + **SFace** (mais leve em disco — 5 MB — e o mais rápido de todos após corrigir uma distorção de medição causada por rodar vários modelos TensorFlow no mesmo processo; ver relatório para detalhes). GhostFaceNet segue como alternativa leve de reserva.
+**Recomendação para o hardware do projeto:** **ArcFace** (melhor acurácia, tempo de inferência aceitável) + **SFace** (mais leve em disco — 5 MB — e o mais rápido de todos após corrigir uma distorção de medição causada por rodar vários modelos TensorFlow no mesmo processo; ver relatório para detalhes). GhostFaceNet segue como alternativa leve de reserva. *Essa recomendação vem da rodada com o detector Haar; com RetinaFace e YuNet o SFace não melhora (e cai para 75,00% com o YuNet), então a dupla está em reavaliação até a calibração do limiar de cada modelo.*
 
 **Achado metodológico relevante:** o `DeepFace` (a biblioteca) nunca libera da memória um modelo já carregado, então medir o tempo de inferência de vários modelos no mesmo processo Python distorce os resultados dos últimos da fila (chegou a fazer o SFace parecer 47x mais lento do que é). O script de benchmark foi corrigido para isolar cada modelo em um processo separado.
 
@@ -110,3 +110,4 @@ Os 10 algoritmos de reconhecimento (segunda etapa do pipeline, depois da detecç
 - 2026-09-16: RetinaFace vs. YuNet (comparação e compatibilidade com o projeto)
 - 2026-09-16: Benchmark empírico dos 10 algoritmos de reconhecimento facial contra o dataset LFW; correção de uma distorção de medição de tempo (isolamento de processo); Dlib e DeepFace/Facebook viabilizados; discussão sobre MobileFaceNet, InsightFace, MediaPipe, S3FD, LBPH e Eigenfaces/Fisherfaces
 - 2026-10-05: Benchmark repetido com o detector RetinaFace (comparação OpenCV × RetinaFace nos mesmos 384 pares)
+- 2026-10-25: Benchmark com o detector YuNet (comparação OpenCV × RetinaFace × YuNet); limiar de confiança do YuNet baixado para 0,5 por causa da borda preta que o DeepFace acrescenta antes da detecção
